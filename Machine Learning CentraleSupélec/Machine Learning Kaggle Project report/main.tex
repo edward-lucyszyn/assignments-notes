@@ -1,0 +1,154 @@
+
+\documentclass[a4paper, 12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage[T1]{fontenc}
+\setlength\parindent{0pt}
+\usepackage{graphicx}
+\usepackage[ddmmyyyy]{datetime}
+\usepackage{pgfplots}
+
+\usepackage[backend=biber]{biblatex}
+\addbibresource{ref.bib}
+
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{forest}
+\usepackage{setspace}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+\usepackage{easytable}
+\usepackage{adjustbox}
+\usepackage{listings}
+\lstdefinelanguage{Matlab}%
+  {morekeywords={matlab2tikz},
+   morekeywords=[2]{1}, 
+   morekeywords=[3]{xlim,ylim,clim,iter},
+   morekeywords=[4]{x,y,scatter,contour,imagesc,addplot3},
+   morecomment=[l][\color{blue}]{...},%
+   morestring=[m]',%
+   morestring=[m]"%
+  }[keywords,comments,strings]
+
+\lstset{%
+  language=Matlab,%
+  breaklines=true,%
+  morekeywords={matlab2tikz},
+  keywordstyle=\color{blue},%
+  morekeywords=[2]{1}, keywordstyle=[2]{\color{black}},
+  identifierstyle=\color{black},%
+  stringstyle=\color{mylilas},
+  commentstyle=\color{mygreen},%
+  showstringspaces=false,
+  numbers=left,%
+  numberstyle={\tiny \color{black}},
+  numbersep=9pt,
+  emph=[1]{for,end,break},emphstyle=[1]\color{red},
+}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,  % Changer la couleur ici
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\renewcommand{\dateseparator}{/}
+
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\pagestyle{fancy}
+\renewcommand\headrulewidth{1pt}
+\renewcommand\footrulewidth{1pt}
+\geometry{headsep=1.1cm}
+
+\newtheorem{theorem}{Théorème}[subsection]
+\newtheorem{corollary}{Corollaire}[theorem]
+\newtheorem{lemma}[theorem]{Lemme}
+\newtheorem{definition}{Définition}[subsection]
+\newtheorem{proposition}{Proposition}[section]
+
+\fancyhead[L]{\includegraphics[width=0.1\columnwidth]{./logo}~}
+\fancyfoot[L]{\textsc{Machine Learning
+}}
+\fancyhead[R]{\textsc{Kaggle Project Report}}
+\fancyfoot[C]{\thepage/\pageref{LastPage}}
+\fancyfoot[R]{\textsc{\today}}
+
+\usepackage{xcolor}
+\usepackage{piton}
+\usepackage{tcolorbox}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\Arg}{\operatorname{Arg}}
+
+\usepackage{amsmath}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\argmin}{argmin}
+
+%====================== INFORMATION ET REGLES ======================
+
+%rajouter les numérotation pour les \paragraphe et \subparagraphe
+
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{0}
+
+%======================== DEBUT DU DOCUMENT ========================
+
+\begin{document}
+
+% \NewPitonEnvironment{Python}{O{}}{\PitonOptions{#1}}{}
+\PitonOptions{break-lines, indent-broken-lines}
+
+\NewPitonEnvironment{Python}{}
+  {\begin{tcolorbox}[breakable]}
+  {\end{tcolorbox}}
+
+
+%régler l'espacement entre les lignes
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+%page de garde
+\input{title.tex}
+
+%page blanche
+%\newpage
+%~
+%ne pas numéroter cette page
+
+\tableofcontents
+% \setcounter{page}{1}
+%ne pas numéroter le sommaire
+
+%\newpage
+
+%espacement entre les lignes d'un tableau
+\renewcommand{\arraystretch}{1.5}
+
+%====================== INCLUSION DES PARTIES ======================
+
+
+%recommencer la numérotation des pages à "1"
+\setcounter{page}{1}
+
+\newpage
+\input{intro}
+\input{1}
+\input{2}
+\input{summ}
+
+\end{document}

@@ -1,0 +1,59 @@
+\section*{Exercise IV: Dimension Reduction}
+
+(a) Let $J$ be the cost function defined as:
+\[
+    J: \mathbf{w} \mapsto \frac{\mathbf{w}^{\top} \mathbf{S_b} \mathbf{w}}{\mathbf{w}^{\top} \mathbf{S_w} \mathbf{w}}.
+\]
+Then, to find the maximum of $J$, we take the derivative and set it to zero.
+\[
+    \frac{d}{d \mathbf{w}}[J(\mathbf{w})]= \frac{d}{d\mathbf{w}}\left[ \frac{\mathbf{w}^{\top} \mathbf{S_b} \mathbf{w}}{\mathbf{w}^{\top}\mathbf{S_w}\mathbf{w}}\right] =0
+\]
+\[
+    \iff \left(\left[\mathbf{w}^{\top} \mathbf{S_w} \mathbf{w}\right] \frac{d\left[\mathbf{w}^{\top} \mathbf{S_b} \mathbf{w}\right]}{d \mathbf{w}}-\left[\mathbf{w}^{\top} \mathbf{S_b} \mathbf{w} \right] \frac{d\left[\mathbf{w}^{\top} \mathbf{S_w} \mathbf{w}\right]}{d \mathbf{w}}\right) /\left(\mathbf{w}^{\top} \mathbf{S_w} \mathbf{w}\right)^2=0 
+\]
+\[
+    \iff \left(\left[\mathbf{w}^{\top} \mathbf{S_w} \mathbf{w}\right] 2 \mathbf{S_b} \mathbf{w}-\left[\mathbf{w}^{\top} \mathbf{S_b} \mathbf{w}\right] 2 \mathbf{S_w} \mathbf{w}\right) /\left(\mathbf{w}^{\top} \mathbf{S_w} \mathbf{w}\right)^2=0
+\]
+\[
+\iff \left[\frac{\mathbf{w}^{\top} \mathbf{S_w} \mathbf{w}}{\mathbf{w}^{\top} \mathbf{S_w} \mathbf{w}}\right] \mathbf{S_b} \mathbf{w}-\left[\frac{\mathbf{w}^{\top} \mathbf{S_b} \mathbf{w}}{\mathbf{w}^{\top} \mathbf{S_w} \mathbf{w}}\right] \mathbf{S_w} \mathbf{w} =0 
+\]
+\[
+\iff \mathbf{S_b} \mathbf{w} - J(\mathbf{w}) \mathbf{S_w} \mathbf{w} = 0
+\]
+By setting $\lambda = \displaystyle \left[\frac{\mathbf{w}^{\top} \mathbf{S_b} \mathbf{w}}{\mathbf{w}^{\top} \mathbf{S_w} \mathbf{w}}\right]$, we obtain the \textit{Generalized eigenvalue problem}:
+\[
+\boxed{
+    \mathbf{S_w}^{-1} \mathbf{S_b} \mathbf{w} = \lambda \mathbf{w}.
+}
+\]
+(b) In this problem, $\mathbf{w}$ is one of the eigenvector that correspond to the eigenvalue $\lambda$. Since, $\lambda = \displaystyle \left[\frac{\mathbf{w}^{\top} \mathbf{S_b} \mathbf{w}}{\mathbf{w}^{\top} \mathbf{S_w} \mathbf{w}}\right] = J(\mathbf{w})$, the solution to the problem will be one of the eigenvector corresponding to the highest eigenvalue of the \textit{Generalized eigenvalue problem}.\\ \\ 
+(c) The first step of the Pirncipal Component Analysis (PCA) algorithm is to center and standardize the matrix. By setting,
+\[
+\mathbf{X_1} = \begin{bmatrix}
+ 0.4669 \\
+ −0.2097 \\
+ 0.6252 \\
+  0.1832 \\
+  −1.0298
+\end{bmatrix}; \quad
+\mathbf{X_2} = \begin{bmatrix}
+ 0.9492 \\
+ 0.3071 \\
+ 0.1352 \\
+  0.5152 \\
+  0.2614
+\end{bmatrix};
+\]
+we have, $\mu(X_1) = 0.00716, \mu(X_2) = 0.43362, \sigma(X_1) = 0.59103, \sigma(X_2) = 0.28537$. Then, computing the covariance matrix we the standardized matrix $\mathbf{X}$:
+\[ \boxed{\mathbf{V} = 
+\begin{bmatrix}
+    1.25 & 0.40461055 \\
+    0.40461055 & 1.25
+\end{bmatrix}.}
+\]
+
+(d) The eigenvalues are:
+\[\boxed{
+    \sigma(\mathbf{V}) = \{1.65461055, 0.84538945\}.}
+\]
+(e) The variance of the principal component accounts for $\boxed{66\%}$. It is not enough. We try to reach 80\% of 90\%.

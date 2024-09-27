@@ -1,0 +1,363 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel} %Pour les accents.
+\usepackage{amssymb} %Pour les corps.
+\usepackage{stmaryrd} %Pour les doubles crochets (intervalles entiers).
+\usepackage{enumitem} %Pour énumérer avec autre chose que 1,2,3.
+\usepackage{amsmath} %Pour les coefs binomiaux.
+\usepackage{float}
+\usepackage{array}
+\usepackage{listings}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry} %Pour régler la taille de la marge.
+\usepackage[T1]{fontenc}
+\setlength\parindent{0pt}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+\usepackage{easytable}
+\usepackage{adjustbox}
+\usepackage{tikz,lipsum,lmodern}
+\usepackage[most]{tcolorbox}
+
+\newcommand{\bZ}{\mathbb{Z}}
+
+\newcommand{\bun}{\mathbf{1}}
+\newcommand{\bN}{\mathbb{N}}
+\newcommand{\bR}{\mathbb{R}}
+\newcommand{\bP}{\mathbb{P}}
+\newcommand{\bE}{\mathbb{E}}
+\newcommand{\bV}{\mathbb{V}}
+\newcommand{\intbrac}[2]{\llbracket #1,#2\rrbracket}
+\newcommand{\Prin}{\operatorname{Prin}}
+\newcommand{\Pic}{\operatorname{Pic}}
+\newcommand{\Diag}{\operatorname{Diag}}
+\usepackage[backend=biber]{biblatex}
+\addbibresource{ref.bib}
+
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{lastpage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\pagestyle{fancy}
+\renewcommand\headrulewidth{1pt}
+\renewcommand\footrulewidth{1pt}
+\geometry{headsep=1.1cm}
+
+\fancyhead[L]{\includegraphics[width=0.1\columnwidth]{./logo}~}
+\fancyfoot[L]{\textsc{Algèbre \& Cryptologie
+}}
+\fancyhead[R]{\textsc{Challenge 3}}
+\fancyfoot[C]{\thepage/\pageref{LastPage}}
+\fancyfoot[R]{\textsc{\today}}
+
+\title{Algèbre \& Cryptologie : Challenge 2}
+\author{Raphaël PAIN DIT HERMIER\\
+Alexis LOMBARD-GAILLARD\\
+Edward LUCYSZYN}
+\date{Avril 2024}
+
+\begin{document}
+
+\input{title}
+
+\tableofcontents
+
+\newpage
+\section{Question 1}
+
+Dans cette question, notre tâche est de trouver un groupe cyclique fini $G = \langle g\rangle$ sur lequel le problème du logarithme discret est difficile avec une sécurité d'au moins $64$ bits.\\ \\
+Premièrement, la condition sur la sécurité nous impose que $|G| > 2^{64}$. Dans un premier temps, on pourrait considérer le groupe cyclique $(F_p^n)^\times$ où $p$ est petit (par exemple $p = 2$) et $n>64$. Cependant cette méthode ne marche pas : un article publié en 2014 \cite{2} révèle que le problème du logarithme discret est cassé sur les groupes obtenus par corps finis de petite caractéristique.\\ \\
+Une autre piste qui semble bien meilleure est celle du logarithme discret dans $\mathbb{F}_p^\times$ où $p > 2^64$ est un nombre premier. Ici la difficulté ne vient pas dans la sécurité mais dans le choix d'un générateur : en effet, on n'a a priori aucune méthode pour s'assurer que $x\in \mathbb{F}_p^\times$ est bien un générateur de ce dernier.\\
+
+Notre approche est alors la suivante : En s'inspirant du cours, on cherche $q > 2^{64}$ un premier de Sophie-Germain, c'est-à-dire un nombre premier tel que $2q+1$ est aussi premier. Alors pour n'importe quel $x\in \mathbb{F}_p^\times \backslash \{\pm 1\}$, $G = \langle x^2 \rangle$ est un groupe cyclique fini de cardinal $q$, dans lequel le problème du logarithme discret est difficile avec une sécurité d'au moins $\lfloor \log_2 q \rfloor$ bits. (On remarquera que le $G$ obtenu ne dépend pas de l'élément $x$ choisi)\\
+
+Il nous reste alors à générer un premier de Sophie-Germain de taille satisfaisante. Rappelons d'abord le théorème de Pocklington :\\ \\
+\textit{Soit $n$ un entier. S’il existe des entiers $a$ et $q$ tels que:
+\begin{enumerate}
+    \item $q$ est premier, $q |(n-1)$, et $q > \sqrt{n} - 1$;
+    \item $a^{n-1} = 1$ mod $n$;
+    \item $\operatorname{gcd}(a^{(n-1)/q} - 1, n) = 1$;
+\end{enumerate}
+alors $n$ est premier.}\\ \\
+On propose alors l'algorithme suivant :
+\begin{enumerate}
+    \item On commence avec $a = 2$, $R = 2$, $q$ un petit nombre premier arbitraire.
+    \item On calcule $n = qR + 1$.
+    \item Si $(a,q,n)$ vérifie Pocklington, alors $n$ est premier, $q\leftarrow n$. Sinon, $R\leftarrow R+1$ et revenir à l'étape $2$.
+    \item Si $q$ est plus grand que la taille désirée ($2^{64}$) et $R = 2$, alors  l'algorithme s'arrête. Sinon, $R\leftarrow 2$ et on revient à l'étape $2$.
+\end{enumerate}
+
+L'algorithme n'est pas garanti de s'arrêter, mais s'il s'arrête alors on a bien obtenu un nombre $q$ premier de Sophie-Germain de taille convenable.\\
+Voici ce que l'algorithme fournit, lorsque codé et implémenté avec $q=3$: (avertissement pour les âmes sensibles avec une phobie des grands nombres)
+
+\begin{itemize}
+    \item 6482226737587381241468464400665682004119461031272275210692735786586209077703793154323598576756405791- 301259 est premier (a=2, \\q=3241113368793690620734232200332841002059730515636137605346367893293104538851896577161799288378202- 895650629);
+\item 324111336879369062073423220033284100205973051563613760534636789329310453885189657716179928837820289- 5650629 est premier (a=2, \\q=4071750463308656558711346985342765077964485572407208046917547604639578566396854996434421216555531- 275943);
+\item 407175046330865655871134698534276507796448557240720804691754760463957856639685499643442121655553127- 5943 est premier (a=2, \\q=22620835907270314215063038807459805988691586513373378038430820025775436479982527757969006758641840- 4219);
+\item 226208359072703142150630388074598059886915865133733780384308200257754364799825277579690067586418404219 est premier (a=2, \\q=130004804064771920776224360962412678095928658122835505967993218538939290114842113551546015854263- 4507);
+\item 1300048040647719207762243609624126780959286581228355059679932185389392901148421135515460158542634507 est premier (a=2,\\ q=72224891147095511542346867201340376719960365623797503315551788077188494508245618639747786585701917);
+\item 72224891147095511542346867201340376719960365623797503315551788077188494508245618639747786585701917 est premier (a=2, \\q=547158266265875087442021721222275581211820951695435631178422636948397685668527413937483231709863);
+\item 547158266265875087442021721222275581211820951695435631178422636948397685668527413937483231709863 est premier (a=2,\\ q=573541159607835521427695724551651552632936008066494372304426244180710362335982614190233995503);
+\item 573541159607835521427695724551651552632936008066494372304426244180710362335982614190233995503 est premier (a=2,\\ q=2630922750494658355172916167668126388224477101222451249102872679728029185027443184358871539);
+\item 2630922750494658355172916167668126388224477101222451249102872679728029185027443184358871539 est premier (a=2,\\ q=187923053606761311083779726262009027730319792944460803507348048552002084644817370311347967);
+\item 187923053606761311083779726262009027730319792944460803507348048552002084644817370311347967 est premier (a=2,\\ q=1999181421348524585997656662361798167343827584515540462844128176085128560051248620333489);
+\item 1999181421348524585997656662361798167343827584515540462844128176085128560051248620333489 est premier (a=2, q=41649612944760928874951180465870795152996408010740426309252670335106845001067679590281);
+\item 41649612944760928874951180465870795152996408010740426309252670335106845001067679590281 est premier (a=2, q=1041240323619023221873779511646769878824910200268510657731316758377671125026691989757);
+\item 1041240323619023221873779511646769878824910200268510657731316758377671125026691989757 est premier (a=2, q=28923342322750645052049430879076941078469727785236407159203243288268642361852555271);
+\item 28923342322750645052049430879076941078469727785236407159203243288268642361852555271 est premier (a=2, q=2892334232275064505204943087907694107846972778523640715920324328826864236185255527);
+\item 2892334232275064505204943087907694107846972778523640715920324328826864236185255527 est premier (a=2, q=22955033589484638930197961015140429427356926813679688221589875625610033620517901);
+\item 22955033589484638930197961015140429427356926813679688221589875625610033620517901 est premier (a=2, q=229550335894846389301979610151404294273569268136796882215898756256100336205179);
+\item 229550335894846389301979610151404294273569268136796882215898756256100336205179 est premier (a=2, q=38258389315807731550329935025234049045594878022799480369316459376016722700863);
+\item 38258389315807731550329935025234049045594878022799480369316459376016722700863 est premier (a=2,\\ q=6376398219301288591721655837539008174265813003799913394886076562669453783477);
+\item 6376398219301288591721655837539008174265813003799913394886076562669453783477 est premier (a=2,\\ q=38880476946959076778790584375237854721133006120731179237110222943106425509);
+\item 38880476946959076778790584375237854721133006120731179237110222943106425509 est premier (a=2,\\ q=206811047590207855206332895612967312346452160216655208708033100761204391);
+\item 206811047590207855206332895612967312346452160216655208708033100761204391 est premier (a=2,\\ q=1590854212232368116971791504715133171895785847820424682369485390470803);
+\item 1590854212232368116971791504715133171895785847820424682369485390470803 est premier (a=2,\\ q=3842643024715865016840076098345732299265183207295711793163008189543);
+\item 3842643024715865016840076098345732299265183207295711793163008189543 est premier (a=2,\\ q=46861500301412988010244830467630881698355892771898924306865953531);
+\item 46861500301412988010244830467630881698355892771898924306865953531 est premier (a=2,\\ q=142004546367918145485590395356457217267745129611814922142018041);
+\item 142004546367918145485590395356457217267745129611814922142018041 est premier (a=2,\\ q=1183371219732651212379919961303810143897876080098457684516817);
+\item 1183371219732651212379919961303810143897876080098457684516817 est premier (a=2,\\ q=24653567077763566924581665860496044664539085002051201760767);
+\item 24653567077763566924581665860496044664539085002051201760767 est premier (a=2,\\ q=152182512825701030398652258398123732497154845691674084943);
+\item 152182512825701030398652258398123732497154845691674084943 est premier (a=2,\\ q=1102771832070297321729364191290751684761991635446913659);
+\item 1102771832070297321729364191290751684761991635446913659 est premier (a=2,\\ q=183795305345049553621560698548458614126998605907818943);
+\item 183795305345049553621560698548458614126998605907818943 est premier (a=2,\\ q=1134538921883021935935559867583077864981472875974191);
+\item 1134538921883021935935559867583077864981472875974191 est premier (a=2,\\ q=113453892188302193593555986758307786498147287597419);
+\item 113453892188302193593555986758307786498147287597419 est premier (a=2,\\ q=110578842288793561007364509511021234403652327093);
+\item 110578842288793561007364509511021234403652327093 est premier (a=2,\\ q=1626159445423434720696536904573841682406651869);
+\item 1626159445423434720696536904573841682406651869 est premier (a=2,\\ q=6890506124675570850409054680397634247485813);
+\item 6890506124675570850409054680397634247485813 est premier (a=2,\\ q=246089504452698958943180524299915508838779);
+\item 246089504452698958943180524299915508838779 est premier (a=2,\\ q=3154993646829473832604878516665583446651);
+\item 3154993646829473832604878516665583446651 est premier (a=2, q=63099872936589476652097570333311668933);
+\item 63099872936589476652097570333311668933 est premier (a=2, q=15774968234147369163024392583327917233);
+\item 15774968234147369163024392583327917233 est premier (a=2, q=328645171544736857563008178819331609);
+\item 328645171544736857563008178819331609 est premier (a=2, q=1416574015279038179150897322497119);
+\item 1416574015279038179150897322497119 est premier (a=2, q=236095669213173029858482887082853);
+\item 236095669213173029858482887082853 est premier (a=2, q=3106521963331224077085301145827);
+\item 3106521963331224077085301145827 est premier (a=2, q=172584553518401337615850063657);
+\item 172584553518401337615850063657 est premier (a=2, q=1027289009038103200094345617);
+\item 1027289009038103200094345617 est premier (a=2, q=21401854354960483335298867);
+\item 21401854354960483335298867 est premier (a=2, q=1188991908608915740849937);
+\item 1188991908608915740849937 est premier (a=2, q=5716307252927479523317);
+\item 5716307252927479523317 est premier (a=2, q=476358937743956626943);
+\item 476358937743956626943 est premier (a=2, q=21652678988361664861);
+\item 21652678988361664861 est premier (a=2, q=360877983139361081);
+\item 360877983139361081 est premier (a=2, q=9021949578484027);
+\item 9021949578484027 est premier (a=2, q=1503658263080671);
+\item 1503658263080671 est premier (a=2, q=50121942102689);
+\item 50121942102689 est premier (a=2, q=1566310690709);
+\item 1566310690709 est premier (a=2, q=391577672677);
+\item 391577672677 est premier (a=2, q=32631472723);
+\item 32631472723 est premier (a=2, q=5438578787);
+\item 5438578787 est premier (a=2, q=2719289393);
+\item 2719289393 est premier (a=2, q=169955587);
+\item 169955587 est premier (a=2, q=9441977);
+\item 9441977 est premier (a=2, q=1180247);
+\item 1180247 est premier (a=2, q=590123);
+\item 590123 est premier (a=2, q=22697);
+\item 22697 est premier (a=2, q=2837);
+\item 2837 est premier (a=2, q=709);
+\item 709 est premier (a=2, q=59);
+\item 59 est premier (a=2, q=29);
+\item 29 est premier (a=2, q=7);
+\item 7 est premier (a=2, q=3);
+\end{itemize}
+
+Donc $q = 3241113368793690620734232200332841002059730515636137605346367893293104538851896577161799288- 378202895650629$ est premier de Sophie-Germain, et en notant $p = 2q+1$, $G$ tel que décrit précédemment est un groupe cyclique fini de cardinal $q$ et de sécurité d'environ $350$ bits.
+
+\newpage
+\section{Question 2}
+
+L'objectif de cette question de reconstituer le message d'origine d'un texte fragmenté, codé à partir du code de Reed-Solomon.\\ \\
+L'idée est que, à chaque groupe de 8 octets $(m_i)_{0 \le i \le 7}$ du message transmis, il existe un UNIQUE polynôme interpolateur de degré au plus $3$, à coefficients dans $\mathbb{F}_2[X]/(X^8 + X^4 + X^3 + X^2 + 1)$, tel que:
+$$\forall i \in \llbracket 0, 3 \rrbracket, \ L(X^i) = m_i$$
+et
+$$\forall i \in \llbracket 4, 7 \rrbracket, \ L(X^{i+1}) = m_i,$$ où les $m_i$ sont sous la forme de polynômes (\textit{i.e.} si $m_i = abcdefgh_2$, alors le polynôme associé est alors $m_i(X) = aX^7 + bX^6 + cX^5 + dX^4 + eX^3 + fX^2 + gX + h$).\\ \\
+Commençons par analyser le message. En découpant le message codé en groupes de 8 octets et en effectuant une simple analyse de fréquence, nous observons qu'il y a exactement 23 fois 2 octets manquants, 43 fois 3 octets manquants, 36 fois 4 octets manquants, 7 fois 5 octets manquants, et une seule fois 6 octets manquants. Sachant qu'il faut au minimum 4 octets pour avoir le polynôme interpolateur, cela signifie que nous pourrons décrypter intégralement 102/110 groupes de 8 octets. Nous ferons les autres avec le contexte de la phrase. Le code utilisé pour cette analyse est le suivant.
+
+\begin{lstlisting}
+message = message.split()
+
+groups = []
+for i in range(0, len(message), 8):
+    groups.append(message[i:i+8])
+
+missing_bytes = []
+for group in groups:
+    missing_bytes.append(group.count("??"))
+
+missing_bytes_count = {}
+for missing_byte in missing_bytes:
+    if missing_byte not in missing_bytes_count:
+        missing_bytes_count[missing_byte] = 0
+    missing_bytes_count[missing_byte] += 1
+
+print(missing_bytes_count)
+\end{lstlisting}
+
+Pour chaque groupe de 8 octets ($m_0$,...,$m_7$) possédant au moins 4 octets sans "??", on note $\mathbb{I}$ l'ensemble des indices des 4 premiers octets sans "??", incrémenté de 1 si l'indice est supérieur à 4. Pour calculer le polynôme interpolateur $L$ du groupe de 8 octets, il faut d'abord, pour chaque $i \in \mathbb{I}$, calculer un polynôme $\ell_i$, tel que: $$\forall j \in \mathbb{I}, \ \ell_i(X^j) = \delta_{ij},$$ où $\delta$ est le symbole de Kronecker. Ces polynômes peuvent s'exprimer avec la formule suivante, modulo $X^8 + X^4 + X^3 + X^2 + 1$:
+
+$$
+\forall T \in \mathbb{F}_{256}, \quad \ell_i(T) = \prod_{\substack{j \in \mathbb{I}, \\ i \neq j}} \frac{T - X^j}{X^i - X^j}.
+$$
+Petit aparté : on peut noter que "$-X^j$" revient à faire $"+X^j"$ comme on travaille dans $\mathbb{F}_2[X]$.\\
+On aura alors,
+$$
+\forall T \in \mathbb{F}_{256}, \quad L(T) = \sum_{i \in \mathbb{I}} m_i(X) \ell_i(T).
+$$
+
+On reconstitue enfin octets manquants dans le groupe de $8$ octets par la formule
+$$\forall i \in \llbracket 0, 3 \rrbracket, \ L(X^i) = m_i,$$
+et $$\forall i \in \llbracket 4, 7 \rrbracket, \ L(X^{i+1}) = m_i.$$
+Numériquement, nous notons les polynômes sous forme de liste. Par exemple, $[a_2, a_1, a_0]$ représente le polynôme $a_2 X^2 + a_1 X + a_0$. La difficulté majeure de ce code a été de réaliser les opérations élémentaires sur les polynômes, telles que l'addition, la multiplication, et surtout la division. Pour cette dernière, nous utilisé le fait que $\mathbb{F}_{256}$ est un corps, et que tout élément non nul admet un inverse. Le code utilisé a été le suivant.
+
+\begin{lstlisting}
+def poly_add(poly1, poly2):
+    if len(poly1) < len(poly2):
+        poly = poly2.copy()
+        for i in range(len(poly1)):
+            poly[-i-1] = (poly1[-i-1] + poly2[-i-1])%2
+    else:
+        poly = poly1.copy()
+        for i in range(len(poly2)):
+            poly[-i-1] = (poly1[-i-1] + poly2[-i-1])%2
+    while poly and poly[0] == 0:
+        del poly[0]
+    return poly
+
+def poly_mod(dividend, divisor):
+    while dividend and dividend[0] == 0:
+        del dividend[0]
+    while divisor and divisor[0] == 0:
+        del divisor[0]
+    while len(dividend) >= len(divisor):
+        ratio = dividend[0] / divisor[0]
+        for i in range(1, len(divisor)):
+            dividend[i] -= ratio * divisor[i]
+        del dividend[0]
+    for i in range(len(dividend)):
+        dividend[i] = int(dividend[i])%2
+    while dividend and dividend[0] == 0:
+        del dividend[0]
+    return dividend
+
+def poly_multiply(poly1, poly2, modulus_poly=modulus_poly):
+    product = [0] * (len(poly1) + len(poly2) - 1)
+    for i in range(len(poly1)):
+        for j in range(len(poly2)):
+            product[i + j] =  (product[i + j] + poly1[i]*poly2[j])%2
+    return poly_mod(product, modulus_poly)
+
+def poly_power(poly,k,modulus_poly=modulus_poly):
+    result = [1]
+    n = k
+    polycopy = poly.copy()
+    while n > 0:
+        if n % 2 == 1:
+            result = poly_multiply(result,polycopy,modulus_poly)
+        polycopy = poly_multiply(polycopy,polycopy,modulus_poly)
+        n //= 2
+    return result
+
+def poly_pow(poly,k,modulus_poly=modulus_poly):
+    if k==0:
+        return [1]
+    return poly_multiply(poly,poly_pow(poly,k-1,modulus_poly),modulus_poly)
+
+
+list_pow = [[1]]
+for k in range(254):
+    list_pow.append(poly_multiply(list_pow[-1], [1,0], modulus_poly))
+
+def poly_inv(poly):
+    k = 0
+    while poly and poly[0] == 0:
+        del poly[0]
+    while k < 255:
+        if poly == list_pow[k]:
+            return list_pow[-k]
+        k+=1
+    return None
+
+def ell(i, T, I):
+    result = [1]
+    for j in I:
+        if j!=i:
+            U = poly_multiply(poly_add(T, list_pow[j]), \\
+            poly_inv(poly_add(list_pow[i], list_pow[j])), modulus_poly)
+            result = poly_multiply(result, U, modulus_poly)
+    return result
+
+def L(T, M ,I):
+    result = [0]*8
+    for k in range(4):
+        result = poly_add(result,poly_multiply(ell(I[k], T, I), M[k], modulus_poly))
+    return result
+
+def eval(M, I):
+    return [L(list_pow[i], M, I) for i in [0, 1, 2, 3, 5, 6, 7, 8]]
+\end{lstlisting}
+
+Puis, il a fallu décrypter le message. Seuls les $4$ premiers octets du groupe seront ensuite gardés et convertis en ASCII pour reconstituer cette portion du message.\\
+Si plus de $4$ octets sont manquants dans le groupe considéré, alors on mettra des points d'interrogation pour les parties de messages qui n'ont pas pu être restaurées.
+
+\begin{lstlisting}
+def decode(smalllist):
+    I = []
+    i = 0
+    while len(I) < 4 and i < 8:
+        if smalllist[i] != '??':
+            if i < 4:
+                I.append(i)
+            else:
+                I.append(i + 1)
+        i += 1
+    if len(I) != 4:
+        list = smalllist
+        for i in range(len(list)):
+            if list[i] == '??':
+                list[i] = '?'
+        return list
+    else:
+        M = []
+        for i in range(4):
+            if I[i] >= 4:
+                M.append(number_to_binary(int(smalllist[I[i] - 1],16)))
+            else:
+                M.append(number_to_binary(int(smalllist[I[i]],16)))
+        List = eval(M, I)
+        return [chr(binary_to_number(List[i])) for i in range(len(List))]
+    
+decrypted = []
+for group in groups:
+    decrypted.append(decode(group))
+
+def merge(lists):
+    result = []
+    for l in lists:
+        result += l[:4]
+    # Join the strings in the list
+    return ''.join(result)
+
+print(merge(decrypted))
+\end{lstlisting}
+
+Nous obtenons le message suivant :\\ \\
+"\textit{People of Earth, your attention, please. Thi???s Prostetnic Vogo??J?ltz of the Galactic Hyperspace Planning Council. As you will no doubt be aware, the plans for developmen??of the outlyin??r?gion??of the Galaxy require the building of a hyperspatial express route through you??star system. And regre??a?ly, your planet is one of those schedule??for demolition. The process will take slightly less than two of your Earth minutes. Thank you.}"\\ \\ 
+En devinant les morceaux manquants, cela se traduirait par : \textit{"Habitants de la Terre, votre attention s'il-vous-plaît. Nous sommes Prostetnic Vogon Jeltz du Conseil de Planification de l'Hyperespace Galactique. Comme vous le savez sans doute, les plans de développement des régions extérieures de la Galaxie nécessitent la construction d'une voie express hyperspatiale à travers votre système solaire. Et malheureusement, votre planète fait partie de celles programmées pour la démolition. Le processus prendra légèrement moins de deux de vos minutes terrestres. Merci."} \\ \\
+Merci, merci, c'est dommage ... ! Mais bon, vu le temps que nous avons passé à décrypter ce message (bien plus que $2$ minutes) et que nous sommes toujours vivants, il se peut qu'il existe des petits farceurs au sein de l'Hyperespace Galactique, comme décrits dans le Guide...
+
+\newpage
+\nocite{*}
+\printbibliography
+
+
+\end{document}

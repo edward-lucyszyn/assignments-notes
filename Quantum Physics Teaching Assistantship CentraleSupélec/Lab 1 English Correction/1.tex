@@ -1,0 +1,118 @@
+\section{One-Dimensional Schrödinger Equation}
+
+\noindent The goal is to establish the necessary mathematical foundations to better understand and assimilate the concepts of wave function and the resolution of the Schrödinger equation.
+
+\subsection{First Order Equations}
+\noindent Consider the following time-dependent equation:
+\begin{equation}
+    \forall t \in \mathbb{R}_{+}, \quad \frac{df}{dt}(t) = af(t)
+\end{equation}
+where $\displaystyle a=-\frac{1}{\tau}$ is a real constant ($\tau >0$).\\ \\
+
+\noindent \textbf{1)} Find the set of solutions to the differential equation. What is the dimension of $\tau$?\\
+
+\begin{breakbox}
+\noindent This is a first-order differential equation. We know that $f$ has the form: $$\boxed{\forall t \in \mathbb{R}_{+}, \quad f(t)=Ae^{at}}$$ 
+where $A$ is a constant (in $\mathbb{C}$ generally) that depends on an initial condition (or normalization condition). $\tau$ has the dimension of time. It is often referred to as the \textbf{characteristic time}.
+\end{breakbox}
+
+\subsection{Second Order Equations}
+
+\begin{equation}
+    \frac{d^2\phi}{dx^2}(x) = b\phi(x)
+    \label{equ2}
+\end{equation}
+
+\noindent
+where $b$ is a nonzero real constant.\\ \\
+
+\noindent \textbf{2)} Find the set of solutions to the differential equation. Solutions can be sought in exponential form, distinguishing different cases based on the sign of $b$.\\
+
+\begin{breakbox}
+
+\noindent There are several methods to solve this second-order differential equation.\\ \\
+\noindent \textbf{Method 1: Seeking solutions of the form $\phi (x) = Ae^{cx}, c \in \mathbb{R}$.}\\
+We seek solutions in exponential form (this point is admitted). So, $$\phi (x) = Ae^{cx}$$ with $c$ to be determined.
+We substitute this solution into the differential equation (2): $$c^2Ae^{cx} = b Ae^{cx}.$$
+By simplifying with $\phi (x)= Ae^{cx}$ ($A \neq 0$), we obtain: $c^2 = b$. \\ \\Here we distinguish two cases:
+
+\begin{itemize}
+    \item If $b<0$: we set $b=(ik)^2$, with $k > 0$. Then we have the equality $c^2 = (ik)^2$, 
+resulting in $c = \pm ik$. There are thus two forms of exponential solutions, one in $ikx$ and the other in $-ikx$. Since these two solutions are independent, the general solution for $\phi$ is: $$\boxed{\phi(x) = Ae^{ikx} + Be^{-ikx}.}$$
+    \item If $b>0$: we set $b=k^2$. Then we find $c = \pm k$.
+As before, we find two forms of independent exponential solutions, and the general solution is: $$\boxed{\phi = Ae^{kx} + Be^{-kx}.}$$
+\end{itemize}
+\textbf{Method 2: Passing through the characteristic equation.}\\
+We write the characteristic equation (or polynomial) in $X$ associated with the differential equation (2), which is:
+\begin{equation}
+    X^2 - b = 0.
+    \label{eq3}
+\end{equation}
+We also know that the solutions to (\ref{equ2}) are of the form $\psi(x) = Ae^{r_1x}+Be^{r_2x}$ where $r_1, r_2 \in \mathbb{C}$ are the complex roots of equation (\ref{eq3}).\\
+We then distinguish the cases $b >0$ and $b<0$ as detailed in Method 1.
+
+\end{breakbox}
+
+\subsection{Variable Separation and Schrödinger}
+
+\noindent Let $\psi$ be a function of two variables that satisfies the one-dimensional Schrödinger equation: 
+\begin{equation}
+    \forall (x, t) \in \mathbb{R} \times \mathbb{R}_{+}, - \frac{\hbar ^2}{2m}\frac{\partial^2\psi(x,t)}{\partial x^2} = i\hbar\frac{\partial\psi(x,t)}{\partial t}.
+\end{equation}
+\noindent Furthermore, suppose that $\psi$ can be written in the form: 
+\begin{equation}
+    \psi(x,t) = \phi(x)f(t).
+\end{equation}
+
+
+\noindent \textbf{3.a)} Simplify the equation to obtain a term dependent only on $x$ and another term dependent only on $t$. What can be concluded from this equality? \\
+
+\begin{breakbox}
+\noindent We first notice that $$\frac{\partial^2\psi(x,t)}{\partial x^2} = \frac{\partial^2\phi(x)f(t)}{\partial x^2} = f(t)\phi^{''}(x).$$
+Likewise:  $$\frac{\partial\psi(x,t)}{\partial t} = \phi(x)\dot{f}(t).$$
+Knowing this, we rewrite the Schrödinger equation: $$- \frac{\hbar ^2}{2m}f(t)\phi^{''}(x) = i\hbar\phi(x)\dot{f}(t).$$
+Thus finally:
+$$\boxed{-\frac{\hbar ^2}{2m}\frac{\phi^{''}(x)}{\phi(x)} = i\hbar\frac{\dot{f}(t)}{f(t)}.}$$\\
+
+\noindent We obtain an equality between an expression dependent only on $x$ and another dependent only on $t$.
+Therefore, we conclude that the equality must necessarily be equal to a constant, which we denote $E \in \mathbb{R}$.
+\end{breakbox} 
+
+\medskip
+
+\noindent \textbf{3.b)} Deduce the differential equations satisfied by $\phi$ and $f$. Provide the dimension and physical meaning of the introduced constant.\\
+
+\begin{breakbox}
+
+\noindent The constant $E$ has dimensions of energy, which can be seen by examining the dimension of one of the two terms. For example: 
+$$[E]=[\frac{\hbar ^2}{2m}\frac{\phi^{''}(x)}{\phi(x)}\big] = [\frac{\hbar ^2}{2m}] L^{-2} = [\frac{\hbar^2 k^2}{2m}] = [\frac{p^2}{2m}] = Energy$$ \\ \\
+We then obtain the following two differential equations:
+
+\begin{equation}
+    \boxed{\dot{f}(t) = \frac{E}{i\hbar}f(t);}
+    \label{a1}
+\end{equation}
+
+\begin{equation}
+    \boxed{\phi^{''}(x) = -\frac{2mE}{\hbar^2}\phi(x).}
+    \label{a2}
+\end{equation}
+\end{breakbox}
+
+\medskip
+
+\noindent \textbf{3.c)} Then give the general form of the solutions for $\psi(x,t)$ depending on the sign of the introduced constant.\\
+
+\begin{breakbox}
+\noindent Here it is a matter of recognizing the forms of the differential equations from questions 1.1 for equation (\ref{a1}), and 1.2 for equation (\ref{a2}). Thus $$f(t)= Ae^{-i \frac{Et}{\hbar}}.$$\\ \\
+
+\begin{itemize}
+    \item If $E$ is negative, (\ref{a2}) becomes $$\phi^{''}(x) = \frac{2m|E|}{\hbar^2}\phi(x)$$ and according to 1.2:
+    $$\phi(x) = Ae^{kx} + Be^{-kx}\text{, where } k^2 = -\frac{2mE}{\hbar^2}.$$ Finally:
+    $$\boxed{\psi(x,t) = (Ae^{kx} + Be^{-kx})e^{\frac{-iEt}{\hbar}}.}$$
+    \\
+    \item Conversely, if $E$ is positive, then as shown in question 2, the solution will be of the form $\phi(x) = Ae^{ikx} + Be^{-ikx}$, with $\displaystyle k^2 = \frac{2m
+    E}{\hbar^2}.$ \\ \\        Finally: $$\boxed{\psi(x,t) = (Ae^{ikx} + Be^{-ikx})e^{\frac{-iEt}{\hbar}}.}$$
+\end{itemize}
+\end{breakbox}
+

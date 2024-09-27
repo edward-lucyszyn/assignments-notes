@@ -1,0 +1,290 @@
+\section{Calcul de la dérivée de l'énergie}
+
+
+À partir d'une formulation variationnelle d'un problème paramétrique sur un domaine fixe $\Omega$, où sa solution $u$ dépend du paramètre $\chi$.\\ 
+
+De manière schématique, pour un espace de Hilbert $H$, $u \in H$, dépendant de $\chi$, on cherche à résoudre la formulation variationnelle suivante :
+
+\[\forall v\in H, \quad F_V(\chi, u(\chi), v) = 0. \]
+
+Dans notre cas, on considèrera la formulation variationnelle : \\
+
+
+La fonction test $v$ ne dépend pas de $\chi$.\\
+
+On cherche à minimiser l'énergie $J(\chi,u(\chi)) = \int_{\Omega} |u(\chi)|^2 \, dx$ sur $\chi \in U_{ad}^*(\beta)$, et on doit calculer sa dérivée par rapport à $\chi$. Et donc en voyant $J$ comme fonction de $\chi$, on doit trouver sa dérivée de Fréchet, $J'(\chi)$, c'est-à-dire l'application linéaire continue $\chi_0 \mapsto \langle J'(\chi), \chi_0 \rangle$.\\
+
+Le Lagrangien est défini comme suit :
+\[
+L(\chi, w, q) = F_V(\chi, w, q) + J(w), \quad \forall w, q \in H
+\]
+
+Le Lagrangien est la somme de la $F_V$ et de la fonction de minimisation pour des arguments $w$ et $q$ arbitraires dans $H$ qui sont indépendants, et indépendants de $\chi$.
+\\
+
+Toutes les variables du Lagrangien $L$ sont indépendantes.\\
+\subsection{Les étapes de résolution } 
+La dérivée partielle directionnelle de $L$ par rapport à q dans la direction $\phi \in H$ est donnée par
+\[
+\langle \frac{\partial L (\chi, w, q)}{\partial q}, \phi \rangle = F_V (\chi, w, \phi)
+\]
+
+$J$ ne dépend pas de $q$, et $F_V$ est linéaire. Et donc trouver la solution de :
+\[
+\forall \phi \in H, \langle \frac{\partial L (\chi, w, q)}{\partial q}, \phi \rangle = 0
+\]
+revient à trouver la solution faible du problème variationnel.
+
+
+Maintenant, si on choisit $\omega = u(\chi)$ la solution du problème variationnel, alors :
+\[
+L (\chi, u(\chi), q) = J(\chi), \quad \text{pour tout } q \in H 
+\]
+Ainsi, en utilisant la règle de dérivation composée, on trouve $\forall q \in H$ :
+\[
+\langle J'(\chi), \chi_0 \rangle = \langle \frac{\partial L (\chi, u(\chi), q)}{\partial \chi}, \chi_0 \rangle + \langle \frac{\partial L (\chi, u(\chi), q)}{\partial w}, \langle u'(\chi), \chi_0 \rangle \rangle \quad (1)
+\]
+
+Où on suppose formellement que l'application $\chi \to u(\chi)$ est différentiable au sens de Fréchet sur $U_{\text{ad}}^*(\beta)$
+
+Avec la notation $\langle u'(\chi), \chi_0 \rangle = \psi$, un élément de H, l'équation devient :
+\[
+\langle J'(\chi), \chi_0 \rangle = \langle \frac{\partial L (\chi, u(\chi), q)}{\partial \chi}, \chi_0 \rangle + \langle \frac{\partial L}{\partial w} (\chi, u(\chi), q), \psi \rangle \quad (2)
+\]
+
+Par conséquent, pour chaque $\chi$ et $u(\chi)$ fixés, l'idée est de prendre $q \in H$ comme la solution faible du problème variationnel suivant :
+\[
+\forall \phi \in H, \langle \frac{\partial L (\chi, u(\chi), q)}{\partial w}, \phi \rangle = 0 \quad (3)
+\]
+Ce problème variationnel est appelé le problème adjoint, et sa solution faible est notée p($\chi$).
+
+
+On conclut, en remplaçant dans (1)   :
+\[
+\langle J'(\chi), \chi_0 \rangle = \langle \frac{\partial L (\chi, u(\chi), p(\chi))}{\partial \chi}, \chi_0 \rangle
+\]
+
+\subsection{Obtiention de la formulation variationnelle réelle}
+
+\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=Proposition 6.2.1 : Décomposition du problème différentiel]
+On décompose en partie réelle et imaginaire de $p = p_R + ip_I$ et $f = f_R + if_I$, avec $Z=Z_R + iZ_I$ pour obtenir les problèmes différentiels suivants à partir de $(P_H)$ :
+
+\[
+    (P_{H,R}) \hspace{2pt} : \hspace{2pt}
+    \begin{cases}
+    \displaystyle \Delta p_R + k_0^2\Big(1 - \frac{M_0^2}{k_0^2}\frac{\partial^2}{\partial x^2}\Big)p_R+2\frac{M_0}{k_0}\frac{\partial p_I}{\partial x} = \Tilde{f_R} \in L^2(\Omega)\\
+    \displaystyle Z_R\frac{\partial p_R}{\partial n} -Z_I\frac{\partial p_I}{\partial n} -k_0Z_0\chi \Tr \Bigl[\Big(1-\frac{M_0^2}{k_0^2}(\partial_x+\partial_y)^2\Big)p_I-2\frac{M_0}{k_0}(\partial_x+\partial_y)p_R \Bigr] = 0$ sur $\Gamma = \Gamma_1 \sqcup \Gamma_2
+    \\
+    \displaystyle \Tr(p_R) = 0 $ sur $ \Gamma_{in}\\
+    \displaystyle \frac{\partial p_R}{\partial n}-k \Tr(p_I) = 0 $ sur $\Gamma_{out}
+    \end{cases} 
+\]
+
+\[
+    (P_{H,I}) \hspace{2pt} : \hspace{2pt}
+    \begin{cases}
+    \displaystyle \Delta p_I + k_0^2\Big(1 - \frac{M_0^2}{k_0^2}\frac{\partial^2}{\partial x^2}\Big)p_I-2\frac{M_0}{k_0}\frac{\partial p_R}{\partial x} = \Tilde{f_I} \in L^2(\Omega)\\
+    \displaystyle Z_I\frac{\partial p_I}{\partial n} +Z_R\frac{\partial p_R}{\partial n} +k_0Z_0\chi \Tr \Bigl[\Big(1-\frac{M_0^2}{k_0^2}(\partial_x+\partial_y)^2\Big)p_R+2\frac{M_0}{k_0}(\partial_x+\partial_y)p_I \Bigr] = 0$ sur $\Gamma = \Gamma_1 \sqcup \Gamma_2 \hspace*{2cm}
+    \\
+    \displaystyle \Tr(p_I) = 0 $ sur $ \Gamma_{in} \\
+    \displaystyle \frac{\partial p_I}{\partial n} + k \Tr(p_R) = 0 $ sur $\Gamma_{out} 
+    \end{cases} 
+\]
+\end{tcolorbox}
+On le transforme ensuite en une formulation variationnelle, équivalente à celle de la partie 2.1, qui scinde la partie réelle et la partie imaginaire :
+
+\[\forall (q_R,q_I)\in V(\Omega), \begin{cases}
+    A_R(p_R,p_I,q_R,q_I) = l_R(q_R,q_I)\\
+    A_I(p_R,p_I,q_R,q_I) = l_I(q_R,q_I)
+\end{cases}\]
+où
+\\
+\[
+    A_R(p_R,p_I,q_R,q_I) = (\nabla p_R, \nabla q_R)_{(L^2(\Omega))^2}+(\nabla p_I, \nabla q_I)_{(L^2(\Omega))^2} + k(\Tr(p_R),\Tr(q_I))_{L^2(\Gamma_{out})}-k(\Tr(p_I),\Tr(q_R))_{L^2(\Gamma_{out})}\]
+    \[+ C_R(p_R,p_I,q_R,q_I) -k_0^2(p_R,q_R)_{L^2(\Omega)}-k_0^2(p_I,q_I)_{L^2(\Omega)} + 2M_0k_0\Big(\frac{\partial p_R}{\partial x}, q_I\Big)_{L^2(\Omega)}-2M_0k_0\Big(\frac{\partial p_I}{\partial x}, q_R\Big)_{L^2(\Omega)} \]
+\[-M_0^2\Big(\frac{\partial p_R}{\partial x},\frac{\partial q_R}{\partial y}\Big)_{L^2(\Omega)}-M_0^2\Big(\frac{\partial p_I}{\partial x},\frac{\partial q_I}{\partial y}\Big)_{L^2(\Omega)}+ M_0^2\Big(\frac{\partial p_R}{\partial x}\cdot n_x,\Tr(q_R)\Big)_{B'(\partial \Omega),B(\partial \Omega)}+ M_0^2\Big(\frac{\partial p_I}{\partial x}\cdot n_x,\Tr(q_I)\Big)_{B'(\partial \Omega),B(\partial \Omega)}
+\]
+\\
+et
+\\
+    \[A_I(p_R,p_I,q_R,q_I) = (\nabla p_I, \nabla q_R)_{(L^2(\Omega))^2}-(\nabla p_R, \nabla q_I)_{(L^2(\Omega))^2} + k(\Tr(p_R),\Tr(q_R))_{L^2(\Gamma_{out})}+k(\Tr(p_I),\Tr(q_I))_{L^2(\Gamma_{out})}\]
+    \[+ C_I(p_R,p_I,q_R,q_I) +k_0^2(p_R,q_I)_{L^2(\Omega)}-k_0^2(p_I,q_R)_{L^2(\Omega)} + 2M_0k_0\Big(\frac{\partial p_R}{\partial x}, q_R\Big)_{L^2(\Omega)} +2M_0k_0\Big(\frac{\partial p_I}{\partial x}, q_I\Big)_{L^2(\Omega)}\]
+\[+M_0^2\Big(\frac{\partial p_R}{\partial x},\frac{\partial q_I}{\partial y}\Big)_{L^2(\Omega)}-M_0^2\Big(\frac{\partial p_I}{\partial x},\frac{\partial q_R}{\partial y}\Big)_{L^2(\Omega)}+ M_0^2\Big(\frac{\partial p_I}{\partial x}\cdot n_x,\Tr(q_R)\Big)_{B'(\partial \Omega),B(\partial \Omega)}- M_0^2\Big(\frac{\partial p_R}{\partial x}\cdot n_x,\Tr(q_I)\Big)_{B'(\partial \Omega),B(\partial \Omega)}
+\]
+ensuite
+\[\begin{cases}
+    l_R(q_R,q_I) = -(\Tilde{f}_R,q_R)_{L^2(\Omega)}-(\Tilde{f}_I,q_I)_{L^2(\Omega)} \\
+    l_I(q_R,q_I) = (\Tilde{f}_R,q_I)_{L^2(\Omega)}-(\Tilde{f}_I,q_R)_{L^2(\Omega)}
+\end{cases}\]
+
+\newpage
+puis
+\[
+C(p,q) = -k_0\frac{Z_0}{|Z|^2}(Re(Z)i + Im(Z)) \biggl[ \int_{\Gamma} ( \Tr(p_R) \Tr(q_R) + \Tr(p_I) \Tr(q_I)) + i( \Tr(p_I) \Tr(q_R) - \Tr(p_R) \Tr(q_I)) \hspace{2pt} \chi \hspace{2pt} d\mu \]
+\[
+- 2i\frac{M_0}{k_0} \int_{\Gamma} \Tr \Bigl( \frac{\partial p_R}{\partial x}+\frac{\partial p_R}{\partial y} \Bigr) \Tr(q_R) + \Tr \Bigl( \frac{\partial p_I}{\partial x}+\frac{\partial p_I}{\partial y} \Bigr) \Tr(q_I) +i\biggl(  \Tr \Bigl( \frac{\partial p_I}{\partial x}+\frac{\partial p_I}{\partial y} \Bigr) \Tr(q_R) - \Tr \Bigl( \frac{\partial p_R}{\partial x}+\frac{\partial p_R}{\partial y} \Bigr) \Tr(q_I) \biggl)\hspace{2pt} \chi \hspace{2pt} d\mu 
+\]
+\[
++ \frac{M_0^2}{k_0^2}\int_{\Gamma} \Tr \Bigl( \frac{\partial p_R}{\partial x}+\frac{\partial p_R}{\partial y}\Bigr)\Tr\Bigl( \frac{\partial q_R}{\partial x}+\frac{\partial q_R}{\partial y}\Bigr) + \Tr \Bigl( \frac{\partial p_I}{\partial x}+\frac{\partial p_I}{\partial y}\Bigr)\Tr\Bigl( \frac{\partial q_I}{\partial x}+\frac{\partial q_I}{\partial y}\Bigr) + \]
+
+\[i\biggl(\Tr \Bigl( \frac{\partial p_I}{\partial x}+\frac{\partial p_I}{\partial y}\Bigr)\Tr\Bigl( \frac{\partial q_R}{\partial x}+\frac{\partial q_R}{\partial y}\Bigr) - \Tr \Bigl( \frac{\partial p_R}{\partial x}+\frac{\partial p_R}{\partial y}\Bigr)\Tr\Bigl( \frac{\partial q_I}{\partial x}+\frac{\partial q_I}{\partial y}\Bigr) \biggl) \hspace{2pt} \chi  \hspace{2pt} d\mu \biggl]\]
+où\\
+\[
+C_R(p_R,p_I,q_R,q_I) = -k_0\frac{Z_0}{|Z|^2} Im(Z) \biggl[ \int_{\Gamma} ( \Tr(p_R) \Tr(q_R) + \Tr(p_I) \Tr(q_I))\chi \hspace{2pt} d\mu  \]\
+\[
++ 2 \frac{M_0}{k_0} \int_{\Gamma}   \Tr \Bigl( \frac{\partial p_I}{\partial x}+\frac{\partial p_I}{\partial y} \Bigr) \Tr(q_R) - \Tr \Bigl( \frac{\partial p_R}{\partial x}+\frac{\partial p_R}{\partial y} \Bigr) \Tr(q_I) \biggl)\hspace{2pt} \chi \hspace{2pt} d\mu 
+\]
+\[
++ \frac{M_0^2}{k_0^2}\int_{\Gamma} \Tr \Bigl( \frac{\partial p_R}{\partial x}+\frac{\partial p_R}{\partial y}\Bigr)\Tr\Bigl( \frac{\partial q_R}{\partial x}+\frac{\partial q_R}{\partial y}\Bigr) + \Tr \Bigl( \frac{\partial p_I}{\partial x}+\frac{\partial p_I}{\partial y}\Bigr)\Tr\Bigl( \frac{\partial q_I}{\partial x}+\frac{\partial q_I}{\partial y}\Bigr) \biggl]  \]
+\[
++ k_0\frac{Z_0}{|Z|^2}Re(Z)\biggl[ \int_{\Gamma} ( ( \Tr(p_I) \Tr(q_R) - \Tr(p_R) \Tr(q_I)) \hspace{2pt} \chi \hspace{2pt} d\mu \]
+\[
+- 2\frac{M_0}{k_0} \int_{\Gamma} \Tr \Bigl( \frac{\partial p_R}{\partial x}+\frac{\partial p_R}{\partial y} \Bigr) \Tr(q_R) + \Tr \Bigl( \frac{\partial p_I}{\partial x}+\frac{\partial p_I}{\partial y} \Bigr) \Tr(q_I) \chi \hspace{2pt} d\mu 
+\]
+\[
++ \frac{M_0^2}{k_0^2}\int_{\Gamma}
+\biggl(\Tr \Bigl( \frac{\partial p_I}{\partial x}+\frac{\partial p_I}{\partial y}\Bigr)\Tr\Bigl( \frac{\partial q_R}{\partial x}+\frac{\partial q_R}{\partial y}\Bigr) - \Tr \Bigl( \frac{\partial p_R}{\partial x}+\frac{\partial p_R}{\partial y}\Bigr)\Tr\Bigl( \frac{\partial q_I}{\partial x}+\frac{\partial q_I}{\partial y}\Bigr) \biggl) \hspace{2pt} \chi  \hspace{2pt} d\mu \biggl]\]
+et\\ \\
+\[
+C_I(p_R,p_I,q_R,q_I) = -k_0\frac{Z_0}{|Z|^2} Re(Z) \biggl[ \int_{\Gamma} ( \Tr(p_R) \Tr(q_R) + \Tr(p_I) \Tr(q_I))\chi \hspace{2pt} d\mu  \]\
+\[
++ 2 \frac{M_0}{k_0} \int_{\Gamma}   \Tr \Bigl( \frac{\partial p_I}{\partial x}+\frac{\partial p_I}{\partial y} \Bigr) \Tr(q_R) - \Tr \Bigl( \frac{\partial p_R}{\partial x}+\frac{\partial p_R}{\partial y} \Bigr) \Tr(q_I) \biggl)\hspace{2pt} \chi \hspace{2pt} d\mu 
+\]
+\[
++ \frac{M_0^2}{k_0^2}\int_{\Gamma} \Tr \Bigl( \frac{\partial p_R}{\partial x}+\frac{\partial p_R}{\partial y}\Bigr)\Tr\Bigl( \frac{\partial q_R}{\partial x}+\frac{\partial q_R}{\partial y}\Bigr) + \Tr \Bigl( \frac{\partial p_I}{\partial x}+\frac{\partial p_I}{\partial y}\Bigr)\Tr\Bigl( \frac{\partial q_I}{\partial x}+\frac{\partial q_I}{\partial y}\Bigr) \biggl]  \]
+\[
+- k_0\frac{Z_0}{|Z|^2}Im(Z)\biggl[ \int_{\Gamma} ( ( \Tr(p_I) \Tr(q_R) - \Tr(p_R) \Tr(q_I)) \hspace{2pt} \chi \hspace{2pt} d\mu \]
+\[
+- 2\frac{M_0}{k_0} \int_{\Gamma} \Big( \Tr \Bigl( \frac{\partial p_R}{\partial x}+\frac{\partial p_R}{\partial y} \Bigr) \Tr(q_R) + \Tr \Bigl( \frac{\partial p_I}{\partial x}+\frac{\partial p_I}{\partial y} \Bigr) \Tr(q_I) \chi \hspace{2pt} d\mu 
+\]
+\[
++ \frac{M_0^2}{k_0^2}\int_{\Gamma}
+\biggl(\Tr \Bigl( \frac{\partial p_I}{\partial x}+\frac{\partial p_I}{\partial y}\Bigr)\Tr\Bigl( \frac{\partial q_R}{\partial x}+\frac{\partial q_R}{\partial y}\Bigr) - \Tr \Bigl( \frac{\partial p_R}{\partial x}+\frac{\partial p_R}{\partial y}\Bigr)\Tr\Bigl( \frac{\partial q_I}{\partial x}+\frac{\partial q_I}{\partial y}\Bigr) \biggl) \hspace{2pt} \chi  \hspace{2pt} d\mu \biggl]\]
+
+\begin{tcolorbox}[colback=green!5!white,colframe=green!75!black,title=Théorème 6.2.2: Formulation variationnelle réelle]
+À partir de ces deux formulations variationnelles réelles, on soustrait l'une de l'autre pour obtenir la $F_V$ réelle :
+
+\[\forall (u_R,u_I,w_R,w_I)\in (V(\Omega))^4, \]
+\begin{equation}
+    FV(\chi, u_R, u_I, w_R, w_I) = A_R(u_R,u_I,w_R,w_I) - A_I(u_R,u_I,w_R,w_I) + l_I(w_R,w_I) - l_R(w_R,w_I)
+\end{equation}
+
+\end{tcolorbox}
+
+\subsection{Dérivation du Lagrangien}
+
+On commence par écrire l'expression du lagrangien pour notre nouvelle formulation variationnelle réelle :
+
+\begin{equation}
+\forall \chi \in L^{\infty}(\Gamma), \forall (u_R, u_I, w_R, w_I) \in V(\Omega), L(\chi, u_R, u_I, w_R, w_I) = \int_{\Omega} (u_R^2 + u_I^2) \,dx + FV(\chi, u_R, u_I, w_R, w_I).
+\end{equation}
+
+
+
+Trouvons le problème adjoint. 
+
+J est quadratique en \(u_R\) et \(u_I\), et la  \(FV\), est linéaire en \(u_R\) et \(u_I\) respectivement. 
+
+Ces applications sont donc différentiables au sens de Fréchet.\\
+Commen\c cons par calculer :
+
+\[
+\langle \frac{\partial L(\chi, p_R, p_I, q_R, q_I)}{\partial u_R}, \phi_R\rangle = \int_{\Omega} 2 p_R \phi_R \,dx 
+\]
+\[
++(\nabla \phi_R, \nabla q_R)_{(L^2(\Omega))^2} + k(\Tr(\phi_R),\Tr(q_I))_{L^2(\Gamma_{out})}+\langle \frac{\partial (C_R-C_I)(\chi, p_R, p_I, q_R, q_I)}{\partial u_R}, \phi_R\rangle
+\]
+
+\[
+-k_0^2(\phi_R,q_I)_{L^2(\Omega)}+ 
+2M_0k_0\Big(\frac{\partial \phi_R}{\partial x}, q_R\Big)_{L^2(\Omega)}
+-M_0^2\Big(\frac{\partial \phi_R}{\partial x},\frac{\partial q_R}{\partial y}\Big)_{L^2(\Omega)}+ M_0^2\Big(\frac{\partial \phi_R}{\partial x}\cdot n_x,\Tr(q_I)\Big)_{B'(\partial \Omega),B(\partial \Omega)}
+\]
+\[
+-\biggl[-(\nabla \phi_R, \nabla q_I)_{(L^2(\Omega))^2} + k(\Tr(\phi_R),\Tr(q_R))_{L^2(\Gamma_{out})}\]
+
+\[
+\frac{M_0^2}{k_0^2} \int_{\Gamma} - \operatorname{\Tr}\Bigl( \frac{\partial }{\partial x}+\frac{\partial }{\partial y}\Bigr)\phi_R \operatorname{\Tr}\Bigl( \frac{\partial }{\partial x}+\frac{\partial }{\partial y}\Bigr)q_I \, \chi \, d\mu \biggl]
+\]
+\[+k_0^2(\phi_R,q_I)_{L^2(\Omega)} + 2M_0k_0\Big(\frac{\partial \phi_R}{\partial x}, q_R\Big)_{L^2(\Omega)}\]
+\[+M_0^2\Big(\frac{\partial \phi_R}{\partial x},\frac{\partial q_I}{\partial y}\Big)_{L^2(\Omega)}- M_0^2\Big(\frac{\partial \phi_R}{\partial x}\cdot n_x,\Tr(q_I)\Big)_{B'(\partial \Omega),B(\partial \Omega) } \biggl]
+\]
+Le calcul est similaire pour,
+
+\[ 
+\langle \frac{\partial L(\chi, p_R, p_I, q_R, q_I)}{\partial u_I}, \phi_I\rangle = \int_{\Omega} 2 p_I \phi_I \,dx \]
+\[
++(\nabla \phi_I, \nabla q_I)_{(L^2(\Omega))^2}-k(\Tr(\phi_I),\Tr(q_R))_{L^2(\Gamma_{out})} + \langle \frac{\partial (C_R-C_I)(\chi, p_R, p_I, q_R, q_I)}{\partial u_I}, \phi_I\rangle\]
+
+\[+ k_0\frac{Z_0}{Z} \biggl[ \int_{\Gamma} (\Tr(\phi_I) \Tr(q_R)\hspace{2pt} \chi \hspace{2pt} d\mu - 2\frac{M_0}{k_0} \int_{\Gamma} \Tr \Bigl( \frac{\partial}{\partial x}+\frac{\partial }{\partial y} \Bigr)p_I \Tr(\phi_I) \hspace{2pt} \chi \hspace{2pt} d\mu + 
+\frac{M_0^2}{k_0^2}\int_{\Gamma}  - \Tr \Bigl( \frac{\partial }{\partial x}+\frac{\partial }{\partial y}\Bigr)p_R \Tr\Bigl( \frac{\partial }{\partial x}+\frac{\partial }{\partial y}\Bigr)\phi_I \hspace{2pt} \chi  \hspace{2pt} d\mu \biggl].\]
+
+\[-k_0^2(\phi_I,q_I)_{L^2(\Omega)} -2M_0k_0\Big(\frac{\partial \phi_I}{\partial x}, q_R\Big)_{L^2(\Omega)} 
+-M_0^2\Big(\frac{\partial \phi_I}{\partial x},\frac{\partial q_I}{\partial y}\Big)_{L^2(\Omega)}+ M_0^2\Big(\frac{\partial \phi_I}{\partial x}\cdot n_x,\Tr(q_I)\Big)_{B'(\partial \Omega),B(\partial \Omega)}
+\]
+
+
+\[-\biggl[(\nabla \phi_I, \nabla q_R)_{(L^2(\Omega))^2}- k(\Tr(\phi_I),\Tr(q_I))_{L^2(\Gamma_{out})}\]
+
+\[+ k_0\frac{Z_0}{Z} \biggl[ \int_{\Gamma} \Tr(\phi_I) \Tr(q_R) \hspace{2pt} \chi \hspace{2pt} d\mu 
+- 2\frac{M_0}{k_0} \int_{\Gamma} \Tr \Bigl( \frac{\partial }{\partial x}+\frac{\partial }{\partial y} \Bigr)\phi_I \Tr(q_R) \chi
++\frac{M_0^2}{k_0^2} \int_{\Gamma} \operatorname{\Tr}\Bigl( \frac{\partial }{\partial x}+\frac{\partial}{\partial y}\Bigr) \phi_I \operatorname{\Tr}\Bigl( \frac{\partial }{\partial x}+\frac{\partial }{\partial y}\Bigr)q_R \chi \, d\mu \biggl]
+ \]
+
+\[-k_0^2(\phi_I,q_R)_{L^2(\Omega)}  +2M_0k_0\Big(\frac{\partial \phi_I}{\partial x}, q_I\Big)_{L^2(\Omega)}
+-M_0^2\Big(\frac{\partial \phi_I}{\partial x},\frac{\partial q_R}{\partial y}\Big)_{L^2(\Omega)}+ M_0^2\Big(\frac{\partial \phi_I}{\partial x}\cdot n_x,\Tr(q_R)\Big)_{B'(\partial \Omega),B(\partial \Omega) \biggl]}
+\]
+
+On déduit le système adjoint à partir de : 
+\begin{align}
+\langle \frac{\partial L}{\partial u_R}, \phi_R \rangle &= 0 \quad \forall \phi_R \in V(\Omega) \\
+\text{et} \\
+\langle \frac{\partial L}{\partial u_I}, \phi_I \rangle &= 0 \quad \forall \phi_I \in V(\Omega)
+\end{align}
+
+On conserve les mêmes notations pour désigner $q_R(\chi)$ et $q_I(\chi)$ pour les solutions des problèmes adjoints. 
+
+\[
+C_R(p_R,p_I,q_R,q_I) - C_I(p_R,p_I,q_R,q_I) = -k_0\frac{Z_0}{|Z|^2} \biggl( \Im m(Z) - \Re e(Z) \biggl) \biggl[ \int_{\Gamma} ( \Tr(p_R) \Tr(q_R) + \Tr(p_I) \Tr(q_I))\chi \hspace{2pt} d\mu  \]\
+\[
++ 2 \frac{M_0}{k_0} \int_{\Gamma}   \Tr \Bigl( \frac{\partial p_I}{\partial x}+\frac{\partial p_I}{\partial y} \Bigr) \Tr(q_R) - \Tr \Bigl( \frac{\partial p_R}{\partial x}+\frac{\partial p_R}{\partial y} \Bigr) \Tr(q_I) \biggl)\hspace{2pt} \chi \hspace{2pt} d\mu 
+\]
+\[
++ \frac{M_0^2}{k_0^2}\int_{\Gamma} \Tr \Bigl( \frac{\partial p_R}{\partial x}+\frac{\partial p_R}{\partial y}\Bigr)\Tr\Bigl( \frac{\partial q_R}{\partial x}+\frac{\partial q_R}{\partial y}\Bigr) + \Tr \Bigl( \frac{\partial p_I}{\partial x}+\frac{\partial p_I}{\partial y}\Bigr)\Tr\Bigl( \frac{\partial q_I}{\partial x}+\frac{\partial q_I}{\partial y}\Bigr) \biggl]  \]
+\[
++ k_0\frac{Z_0}{|Z|^2}\biggl(\Re e(Z)+\Im m(Z)\biggl)\biggl[ \int_{\Gamma} ( ( \Tr(p_I) \Tr(q_R) - \Tr(p_R) \Tr(q_I)) \hspace{2pt} \chi \hspace{2pt} d\mu \]
+\[
+- 2\frac{M_0}{k_0} \int_{\Gamma} \Tr \Bigl( \frac{\partial p_R}{\partial x}+\frac{\partial p_R}{\partial y} \Bigr) \Tr(q_R) + \Tr \Bigl( \frac{\partial p_I}{\partial x}+\frac{\partial p_I}{\partial y} \Bigr) \Tr(q_I) \chi \hspace{2pt} d\mu 
+\]
+\[
+- \frac{M_0^2}{k_0^2}\int_{\Gamma}
+\biggl(\Tr \Bigl( \frac{\partial p_I}{\partial x}+\frac{\partial p_I}{\partial y}\Bigr)\Tr\Bigl( \frac{\partial q_R}{\partial x}+\frac{\partial q_R}{\partial y}\Bigr) - \Tr \Bigl( \frac{\partial p_R}{\partial x}+\frac{\partial p_R}{\partial y}\Bigr)\Tr\Bigl( \frac{\partial q_I}{\partial x}+\frac{\partial q_I}{\partial y}\Bigr) \biggl) \hspace{2pt} \chi  \hspace{2pt} d\mu \biggl]\]
+et\\ \\
+
+
+Ainsi, 
+\[ 
+\langle J'(\chi), \chi_0\rangle = 
+\langle \frac{\partial L(\chi, p_R(\chi), p_I(\chi), q_R(\chi), q_I(\chi)}{\partial \chi}, \chi_0\rangle = \]
+\[
+ -k_0\frac{Z_0}{|Z|^2} \biggl( \Im m(Z) - \Re e(Z) \biggl) \biggl[ \int_{\Gamma} ( \Tr(p_R(\chi_0)) \Tr(q_R(\chi_0)) + \Tr(p_I(\chi_0)) \Tr(q_I(\chi_0))\chi_0 \hspace{2pt} d\mu  \]\
+\[
++ 2 \frac{M_0}{k_0} \int_{\Gamma}   \Tr \Bigl( \frac{\partial p_I(\chi_0)}{\partial x}+\frac{\partial p_I(\chi_0)}{\partial y} \Bigr) \Tr(q_R(\chi_0)) - \Tr \Bigl( \frac{\partial p_R(\chi_0)}{\partial x}+\frac{\partial p_R(\chi_0)}{\partial y} \Bigr) \Tr(q_I(\chi_0)) \biggl)\hspace{2pt} \chi_0 \hspace{2pt} d\mu 
+\]
+\[
++ \frac{M_0^2}{k_0^2}\int_{\Gamma}\Big( \Tr \Bigl( \frac{\partial p_R(\chi_0)}{\partial x}+\frac{\partial p_R(\chi_0)}{\partial y}\Bigr)\Tr\Bigl( \frac{\partial q_R(\chi_0)}{\partial x}+\frac{\partial q_R(\chi_0)}{\partial y}\Bigr) + \Tr \Bigl( \frac{\partial p_I(\chi_0)}{\partial x}+\frac{\partial p_I(\chi_0)}{\partial y}\Bigr)\Tr\Bigl( \frac{\partial q_I(\chi_0)}{\partial x}+\frac{\partial q_I(\chi_0)}{\partial y}\Bigr)\Big) d\mu \biggl]  \]
+\[
++ k_0\frac{Z_0}{|Z|^2}\biggl(\Re e(Z)+\Im m(Z)\biggl)\biggl[ \int_{\Gamma} ( ( \Tr(p_I(\chi_0)) \Tr(q_R(\chi_0)) - \Tr(p_R(\chi_0)) \Tr(q_I(\chi_0)) \hspace{2pt} \chi_0 \hspace{2pt} d\mu \]
+\[
+- 2\frac{M_0}{k_0} \int_{\Gamma} \Tr \Bigl( \frac{\partial p_R(\chi_0)}{\partial x}+\frac{\partial p_R(\chi_0)}{\partial y} \Bigr) \Tr(q_R(\chi_0)) + \Tr \Bigl( \frac{\partial p_I(\chi_0)}{\partial x}+\frac{\partial p_I(\chi_0)}{\partial y} \Bigr) \Tr(q_I(\chi_0)) \chi_0 \hspace{2pt} d\mu 
+\]
+\[
+- \frac{M_0^2}{k_0^2}\int_{\Gamma}
+\biggl(\Tr \Bigl( \frac{\partial p_I(\chi_0)}{\partial x}+\frac{\partial p_I(\chi_0)}{\partial y}\Bigr)\Tr\Bigl( \frac{\partial q_R(\chi_0)}{\partial x}+\frac{\partial q_R(\chi_0)}{\partial y}\Bigr) - \Tr \Bigl( \frac{\partial p_R(\chi_0)}{\partial x}+\frac{\partial p_R(\chi_0)}{\partial y}\Bigr)\Tr\Bigl( \frac{\partial q_I(\chi_0)}{\partial x}+\frac{\partial q_I(\chi_0)}{\partial y}\Bigr) \biggl) \hspace{2pt} \chi_0  \hspace{2pt} d\mu \biggl]\]
+
+\begin{tcolorbox}[colback=green!5!white,colframe=green!75!black,title=Théorème 6.2.2: Dérivée du Lagrangien]
+
+On reconnaît que 
+\[\langle J'(\chi), \chi_0\rangle = k_0\frac{Z_0}{|Z|^2}\Re e\Big( \Bar{Z}\biggl[ \int_{\Gamma} \Tr(p(\chi_0)) \Tr(\Bar{q}(\chi_0))\chi_0 d\mu -2i\frac{M_0}{k_0} \int_{\Gamma} \Tr \Bigl( \frac{\partial p(\chi_0)}{\partial x}+\frac{\partial p(\chi_0)}{\partial y} \Bigr)\Tr(\Bar{q}(\chi_0))\chi_0 \hspace{2pt} d\mu\]
+\[ -\frac{M_0^2}{k_0^2}\int_{\Gamma} \Tr \Bigl( \frac{\partial p(\chi_0)}{\partial x}+\frac{\partial p(\chi_0)}{\partial y}\Bigr)\Tr\Bigl( \frac{\partial \overline{q}(\chi_0)}{\partial x}+\frac{\partial \overline{q}(\chi_0)}{\partial y}\Bigr) \hspace{2pt} \chi_0  \hspace{2pt} d\mu\biggr ]\Big) = \Re e(iC(p(\chi_0),q(\chi_0),\chi_0)).\]
+\end{tcolorbox}

@@ -1,0 +1,10 @@
+\section{Exercise VIII: Unsupervised Learning and Clustering}
+
+The main distinction between the k-means and k-means++ algorithms lies in the initialization step. While the k-means algorithm randomly selects the positions of centroids, the k-means++ algorithm employs a more intelligent initialization strategy. The first centroid is chosen randomly from the set of points. Subsequently, each succeeding centroid \(c_{i+1}\) is chosen from the remaining points. The point \(x_j\) is selected with the probability:
+
+\[
+\mathbb{P}(x_j = c_{i+1}) = \frac{d(x_j, c_i)^2}{\displaystyle \sum_{k, \text{remaining points}} d(x_k, c_i)^2},
+\]
+
+where $d(x_j, c_i)$ represents the distance between centroid \(c_i\) and point \(x_j\). This initialization strategy ensures that points likely to be sufficiently distant from each other.\\ \\
+The quality of the solution depends on the initialization. Choosing centroids randomly may lead the algorithm to converge to a good local minimum rather than the global minimum. Additionally, it can reduce the number of iterations required for convergence. This can be particularly useful in cases involving a large number of points, where each step takes a considerable amount of time to compute, and where local minima are more likely to exist.

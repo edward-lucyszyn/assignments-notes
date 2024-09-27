@@ -1,0 +1,31 @@
+\section{Model tuning and comparison}
+
+After studying and formatting the data, we tested different models for this problem, starting with a basic model and then moving on to more complex approaches.
+
+\subsection{k-Nearest Neighboors}
+
+The simplest algorithm is arguably the k-Nearest Neighbors (kNN). It was the example algorithm for the project. It achieved an accuracy of 33\% on the test data. We used it very little because we immediately had many features, and with a high number of dimensions, the concept of distance becomes redundant.
+
+\subsection{SVM}
+
+Another algorithm we tried was the Support Vector Machine (SVM). We used a Gaussian kernel for which we found the theta by performing cross-validation with the \texttt{GridSearch} function. However, we did not initially achieve good results, even worse than those of the k-NN. This can be explained either by the fact that the model was not suitable for the problem, or that our training data formatting was not as good at the time, which skewed the results.
+
+\subsection{Random Forests}
+
+One of the more complex models we tested was Random Forest. To do this, we used the \texttt{RandomForest} and \texttt{GridSearch} functions from \texttt{ScikitLearn}. This model is well-suited to our problem because it does not necessarily require normalizing the data, which is perfect since we have continuous and discrete numerical information. Additionally, it is easy to parallelize with Random Forests, which significantly reduces computation time. After reformatting the initial data, we achieved a maximum score of approximately 0.97.
+
+\subsection{Chosen solution}
+
+We therefore chose the model with Random Forest. We also attempted to build a neural network, but the code was complicated to understand and did not yield good results, leading us to believe that we made a mistake. Since Random Forest already provided satisfactory results, we did not delve further into the issue.
+
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+Model & Score \\
+\hline
+kNN &  Between 0,30 and 0,40 \\
+SVM & Less than 0,20 \\
+RandomForest & Around 0,97 \\
+\hline
+\end{tabular}
+\end{center}

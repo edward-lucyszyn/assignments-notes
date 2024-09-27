@@ -1,0 +1,45 @@
+\section{Orders of Magnitude}
+
+\noindent \textbf{1)} Consider a monoatomic gas, ${ }^4 \mathrm{He}$ for example, at room temperature. The particles are free, and it will be shown later in this course that the average kinetic energy per atom is $\displaystyle \frac{3}{2} k_B T$. What is the de Broglie wavelength $\lambda_{dB}$ associated with each of these gas atoms?\\
+
+\begin{breakbox}
+    \noindent Let's first calculate the characteristic energy corresponding to room temperature. This value will be often used later in the course. The quantity $k_BT$ at 300 K is $4.14 \times 10^{-21}$ J, or $2.6 \times 10^{-2}$ eV. So approximately $k_BT \approx 1/40$ eV at room temperature.\\ \\
+    \noindent Therefore, we have:
+    $$\boxed{E_{He} = \frac{\hbar^2(2\pi)^2}{2m_{He}}{\lambda_{dB}^2}.}$$  
+    \noindent and $m_{He} = \frac{4 \times 10^{-3}}{6.02 \times 10^{23}} = 0.66 \times 10^{-26}$ kg. We find $\lambda_{dB} = 7.45 \times 10^{-11}$ m = 0.745 Angströms.
+\end{breakbox}
+
+\medskip
+
+\noindent \textbf{2)} Knowing that the density of the gas is approximately $n=10^{24}$ atoms/$\mathrm{m}^3$ (pressure close to atmospheric), compare the obtained wavelength to the average distance between atoms, $\bar{d}$.\\
+
+\begin{breakbox}
+    \noindent In order to compare this result to a characteristic length of the system, let's estimate the average distance between the gas atoms. The density is $n = 10^{24}\ \mathrm{m}^{-3}$; we deduce an average distance of about $\displaystyle \boxed{\bar{d} \approx n^{-1/3} \approx 10^{-8}\ \mathrm{m}.}$ So $\lambda_{dB} \ll \bar{d}$.
+\end{breakbox}
+
+\medskip
+
+\noindent \textbf{3)} What happens if the temperature is lowered to $10^{-6} \mathrm{~K}$ as allowed by laser cooling technique (Nobel 1997)? Show that the condition $\lambda_{dB} \ll \bar{d}$ is an essential condition for classical physics to still be applicable.\\
+
+\begin{breakbox}
+    \noindent The fact that $\lambda_{dB} \ll \bar{d}$ means that on average, it will be very difficult to observe any interference effects between the waves associated with the gas atoms.\\ \\
+    Consequently, one can expect quantum effects to be negligible. There are several criteria to decide whether quantum physics is appropriate (and necessary) for describing a particular system (see course).\\ \\
+    However, if the helium atom's wavelength is so small, it's because the mass is greater than that of a simple electron, but also because the thermal energy is not negligible.\\
+    Therefore, let's consider what happens if we are able to considerably cool down this gas, thus slowing it down. The available energy is now about $10^{-8}$ times lower.
+    Since the square of the wavelength varies inversely with energy, it will be itself $10^4$ times larger and of the order of $10^{-7}\ \mathrm{m}$.
+    It is then no longer negligible compared to the average distance between atoms in the gas: interference phenomena can then become observable.
+    At these very low temperatures, quantum physics becomes indispensable because its effects dictate the behavior of the system.
+\end{breakbox}
+
+\section{Photoelectric Effect}
+
+\noindent Zinc is one of the metals used in the experiment by Von Lenard to demonstrate the photoelectric effect. The work function of an electron from zinc, i.e., the energy required to release this electron from the attractive potential of the metal ions, is about $4.3 \mathrm{eV}$. By illuminating the zinc with radiation of wavelength $\lambda \approx 200 \mathrm{~nm}$ (far UV) and power $1 \mathrm{~mW}$, what is the maximum power carried by the electron beam?\\
+
+\begin{breakbox}
+    \noindent At a wavelength of $\lambda \approx 200$ nm, the energy of each photon is about $$E = \frac{hc}{\lambda} = \frac{(6.626 \times 10^{-34}) \times (3.00 \times 10^8)}{200 \times 10^{-9}} \approx 9.94 \times 10^{-19} \, \mathrm{J} \approx 6.21\ \mathrm{eV}.$$
+    For a power of $P = 1\ \mathrm{mW}$, there are then $$n = \frac{P}{E} \approx \frac{10^{-3}}{6,2\times 1,6 \times 10^{-19}} \approx 10^{15}\ \mathrm{photons/s}$$ incident on the surface of the metal.\\ \\
+    Assuming that each photon is absorbed by a zinc atom and serves to eject an electron, we can expect that there are also about $10^{15}$ electrons emitted per second.
+    However, the electrons will each have a much lower energy since 4.3 eV has been spent each time to release the electron.
+    Therefore, each electron can only leave with $6.21 - 4.3 = 1.89\ \mathrm{eV}$ of kinetic energy.\\ \\
+    Thus, the electron beam will have at most a power of: $$\boxed{P_f = 1.89 \times 1.6 \times 10^{-19}\times 10^{15} \approx 0.302\ \mathrm{mW}.}$$
+\end{breakbox}

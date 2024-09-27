@@ -1,0 +1,45 @@
+\section{Energy and Wavelength}
+
+\noindent \textbf{1)} What is the energy, expressed in $\mathrm{eV}$, of a photon in the visible spectrum $(0.4-0.8 \mu \mathrm{m})$? \\
+
+\begin{breakbox}
+    \noindent To illustrate, let's consider a photon of $0.5 \mu m$ (this corresponds to the average wavelength in the visible range).\\
+    The Planck-Einstein relation gives $E = \hbar \omega$.
+    For an electromagnetic wave with angular frequency $\omega = 2\pi c /\lambda$, we have:
+    \begin{equation*}
+        E_{\text{photon}} = \frac{2\pi \hbar c}{\lambda} \approx 6.626 \times 10^{-34} \times 3 \times 10^8 \times \frac{1}{\lambda} \approx \frac{19.88 \times 10^{-26}}{\lambda} \: \text{Joules}
+    \end{equation*}
+    It is immediately clear that the Joule (J) is not the suitable unit for this type of problem.
+    We then use the electron-volt (eV). One eV corresponds to the energy of an electron in a potential difference of one Volt:
+    \begin{equation*}
+        E_{\text{photon}} \approx \frac{19.88 \times 10^{-26}}{1.6 \times 10^{-19}} \frac{1}{\lambda} \approx 12.4 \times 10^{-7} \times \frac{1}{\lambda}
+    \end{equation*}
+    For a photon of $0.5 \mu m$, we then have:
+    \begin{equation*}
+        \boxed{E_{\text{photon}} \approx 2.5 \: \text{eV}.}
+    \end{equation*}
+
+    \noindent Note that this relationship, in which we find that energy is inversely proportional to wavelength, \textbf{is specific to the photon}, a particle of zero mass because then $E = pc = \hbar k c = \hbar \frac{2\pi}{\lambda}c$.
+\end{breakbox}
+
+\medskip
+
+\noindent \textbf{2)} Determine the de Broglie wavelength $\lambda_{dB}$ associated with a neutron with the same kinetic energy as this photon. The same question for an electron. Recall that the mass of a neutron $m_n \approx 9.11 \times 10^{-31}$ kg, and the mass of an electron $m_e \approx 1.68 \times 10^{-27}$ kg.\\
+
+
+\begin{breakbox}
+    \noindent For a massive particle like the neutron, if it is non-relativistic, we write:
+    \begin{equation*}
+        E_{\text{neutron}} = \frac{1}{2}m_nv^2 = \frac{p^2}{2m_n} = \frac{\hbar^2 k^2}{2m_n} = \frac{\hbar^2(2\pi)^2}{2m_n}\frac{1}{\lambda^2} \approx 22 \times 10^{-68} \frac{1}{m_n}{\lambda^2} \approx 13.1 \times 10^{-41} \times \frac{1}{\lambda^2}.
+    \end{equation*}
+    Then,
+    \begin{equation*}
+        \boxed{\lambda_{dB} \approx 8.2 \times 10^{-22} \frac{1}{\sqrt{E_{\text{neutron}}}}.}
+    \end{equation*}
+    The wavelength of a neutron with the energy of the photon is thus:
+    $$\boxed{\lambda_{dB} \approx 1.8\times 10^{-11} \: \text{m},}$$ 
+    which is 0.18 Angstroms.
+    To find the wavelength of an electron (still non-relativistic), we just replace with the mass of the electron:
+    $$E_{\text{electron}} \approx 22 \times 10^{-68}\frac{1}{m_e \lambda^2} \approx 2.4 \times 10^{-37} \times \frac{1}{\lambda^2}.$$
+    We find $\boxed{\lambda = 0.7 \, \text{nm}.}$
+\end{breakbox}

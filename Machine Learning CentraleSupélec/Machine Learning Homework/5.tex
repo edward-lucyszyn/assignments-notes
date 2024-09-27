@@ -1,0 +1,122 @@
+\section{Exercise V: Nearest Neighbours and kd-Trees}
+
+(a) Here is the code.
+
+\begin{Python}
+    #%%
+    ## Importing libraries
+    
+    import numpy as np
+    
+    #%%
+    ## Exercice V: Nearest Neighbours and kd-Trees
+    
+    # Given coordinates
+    coordinates = [
+        0.28, 0.13, 0.65, 0.31, 0.61, 0.56, 0.75, 0.15,
+        0.71, 0.12, 0.97, 0.28, 0.38, 0.97, 0.97, 0.15,
+        0.03, 0.13, 0.96, 0.44, 1.00, 0.97, 0.43, 0.79,
+        0.47, 0.00, 0.04, 0.81, 0.10, 0.44, 0.42, 0.26,
+        0.93, 0.31, 0.33, 0.57, 0.44, 0.18, 0.07, 0.44,
+        0.26, 0.50, 0.64, 0.49, 0.42, 0.29, 0.06, 0.78,
+        0.55, 0.65, 0.40, 0.75, 0.55, 0.33, 0.77, 0.93,
+        0.90, 0.65, 0.40, 0.94, 0.29, 0.35, 0.88, 0.12,
+        0.48, 0.34, 0.95, 0.47, 0.85, 0.05, 0.56, 0.15,
+        0.86, 0.83, 0.36, 0.74, 0.09, 0.69, 0.47, 0.34,
+        0.50, 0.98, 0.98, 0.69, 0.67, 0.05, 0.23, 0.54,
+        0.37, 0.78, 0.67, 0.35, 0.52, 0.36, 0.03, 0.54,
+        0.72, 0.38, 0.72, 0.22, 0.11, 0.62, 0.65, 0.22,
+        0.41, 0.09, 0.23, 0.35, 0.38, 0.65, 0.33, 0.73,
+        0.95, 0.76, 0.83, 0.52, 0.44, 0.32, 0.15, 0.01,
+        0.31, 0.65, 0.78, 0.33, 0.85, 0.23, 0.83, 0.21,
+        0.60, 0.82, 0.33, 0.75, 0.05, 0.28, 0.70, 0.32,
+        0.65, 0.17, 0.56, 0.65, 0.96, 0.47, 0.55, 0.14,
+        0.28, 0.68, 1.00, 0.11, 0.53, 0.84, 0.50, 0.75,
+        0.88, 0.36, 0.88, 0.97, 0.72, 0.90, 0.62, 0.31,
+        0.64, 0.53, 0.64, 0.33, 0.79, 0.37, 0.85, 0.14,
+        0.63, 0.80, 0.95, 0.14, 0.50, 0.25, 0.06, 0.64,
+        0.82, 0.75, 0.42, 0.21, 0.42, 0.98, 0.65, 0.78,
+        0.87, 0.16, 0.97, 0.80, 0.63, 0.46, 0.45, 0.04,
+        0.01, 0.98, 0.99, 0.14, 0.53, 0.54, 0.57, 0.47
+    ]
+    
+    # Reshape the coordinates into a numpy matrix
+    data = np.array(coordinates).reshape(-1, 4)
+    
+\end{Python}
+
+\begin{Python}
+    #%%
+    
+    def sorted_index(list):
+        """Return the index of the median sorted value of a list."""
+        return sorted(range(len(list)), key=lambda i: list[i])
+
+    def choose_pivot_index(list):
+        """Return the index of the pivot of a list."""
+        return len(list) // 2
+    
+    def split_data(points, points_index, depth):
+        """Split the data into two parts according to the pivot of the points."""
+        # Get the dimension of the points
+        dimension = points.shape[1]
+    
+        # Sort the points according to the median
+        sorted_points = list(np.array(points_index)[sorted_index(points[points_index][:, depth % dimension])])
+    
+        # Get the index of the pivot
+        pivot_index = choose_pivot_index(sorted_points)
+    
+        # Get the median point
+        pivot_point = sorted_points[pivot_index]
+    
+        # Split the points into two parts
+        left_points = sorted_points[:pivot_index]
+        right_points = sorted_points[pivot_index + 1:]
+    
+        return pivot_point, left_points, right_points
+    
+    def create_kd_tree(points, points_index=-1, depth=0):
+        """Create a kd-tree from a set of points."""
+        if points_index == -1:
+            points_index = list(range(len(points)))
+    
+        # If there are no points, return None
+        if len(points_index) == 0:
+            return None
+\end{Python}
+
+\begin{Python}
+        # Split the points into two parts
+        pivot_point, left_points, right_points = split_data(points, points_index, depth)
+    
+        # Create the node of the tree
+        tree = {
+            'point': pivot_point,
+            'left': create_kd_tree(points, left_points, depth + 1),
+            'right': create_kd_tree(points, right_points, depth + 1)
+        }
+    
+        return tree
+    
+    #%%
+    # Order of the tree
+    
+    def compute_tree_order(tree):
+        """Compute the order of a binary tree with dictionaries."""
+        if tree['left'] == None and tree['right'] == None:
+            return [tree['point']]
+        elif tree['left'] == None and tree['right'] != None:
+            return [tree['point']] + compute_tree_order(tree['right'])
+        elif tree['left'] != None and tree['right'] == None:
+            return [tree['point']] + compute_tree_order(tree['left']) 
+        else:
+            return [tree['point']] + compute_tree_order(tree['left']) + compute_tree_order(tree['right'])
+    
+    result = list(np.array(compute_tree_order(create_kd_tree(data))) + 1)
+    
+    print(result)
+\end{Python}
+The output produced by this algorithm, utilizing the coordinates from the PDF file, is as follows (nodes are indexed from 1 to 50): 
+[50, 8, 27, 44, 10, 30, 24, 7, 12, 34, 16, 1, 17, 5, 23, 28, 26, 20, 11, 38, 46, 4, 37, 49, 21, 31, 36, 14, 22, 25, 48, 18, 9, 35, 3, 32, 42, 39, 47, 6, 33, 19, 45, 15, 13, 40, 43, 2, 29, 41].\\ \\
+(b) At each step of the decision tree, the algorithm selects the optimal split, which involves examining every possible splitting value for each of the $d$ features. Consequently, considering the $n$ data points and assuming linear time for sorting real numbers, the complexity of this step is $O(nd)$. This process must be repeated for every layer of the tree, occurring $h$ times. Therefore, the final complexity is indeed $O(ndh)$.

@@ -1,0 +1,18 @@
+\section{Exercise II: Learning, Model Selection and Evaluation}
+
+By direct calculations:
+\begin{align*}
+    \text{MSE}(\hat{f}(x)) 
+    &= \mathbb{E}[(y - \hat{f}(x))^2] \\
+    &= \mathbb{E}[y^2 + \hat{f}^2(x) - 2y\hat{f}(x)] \\
+    &= \mathbb{E}[f^2(x) + \epsilon^2 + 2\epsilon f(x) + \hat{f}^2(x) - 2f(x)\hat{f}(x) - 2\epsilon \hat{f}(x)].
+\end{align*}
+Since $\epsilon$ is a zero-mean noise and has a variance of $\sigma^2$, $\mathbb{E}(\epsilon) = 0$ and $\operatorname{Var}(\epsilon) = \mathbb{E}(\epsilon^2) = \sigma^2$. Furthermore, $f(x)$ is constant. Thus,
+\begin{align*}
+    \text{MSE}(\hat{f}(x)) 
+    &= \mathbb{E}[(\hat{f}(x) - f(x))^2] + \sigma^2 \\
+    &= \operatorname{Var}(\hat{f}(x) - f(x)) + (\operatorname{Bias}(\hat{f}(x)))^2 + \sigma^2 \\
+    &= \operatorname{Var}(\hat{f}(x)) + (\operatorname{Bias}(\hat{f}(x)))^2 + \sigma^2.
+\end{align*}
+
+So, $$\boxed{\text{MSE}(\hat{f}(x)) = \operatorname{Var}(\hat{f}(x)) + (\operatorname{Bias}(\hat{f}(x)))^2 + \sigma^2.}$$

@@ -1,0 +1,103 @@
+\section{Etude de la continuité de l'énergie}
+
+Le problème initial est le suivant, tel qu'écrit dans la définition du problème différentiel homogène : 
+\[
+    (P_H) \hspace{2pt} : \hspace{2pt}
+    \begin{cases}
+    \displaystyle \Delta p + k_0^2\Big(1 - \frac{iM_0}{k_0}\frac{\partial}{\partial x}\Big)^2p = \Tilde{f} \in L^2(\Omega) \hfill (i')\\
+    \displaystyle Z\frac{\partial p}{\partial n} + ik_0Z_0\chi \Tr \Bigl[ \Bigl(1-i \frac{M_0}{k_0} \Big(\frac{\partial}{\partial x} + \frac{\partial}{\partial y}\Big) \Bigr)^2p \Bigr] = 0$ sur $\Gamma = \Gamma_1 \sqcup \Gamma_2 \hspace*{2cm} \hfill (ii')
+    \\
+    \displaystyle \Tr(p) = 0 $ sur $ \Gamma_{in} \hfill (iii') \\
+    \displaystyle \frac{\partial p}{\partial n} + ik \Tr(p) = 0 $ sur $\Gamma_{out} \hfill (iv')
+    \end{cases} 
+\]
+À partir du problème initial, une approche énergétique est nécessaire des points de vue théoriques et numériques afin de déterminer une grandeur ayant un sens physique, que l'on cherche à minimiser.
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=Definition 4.0: Problème de minimisation]
+Pour une quantité de matériau absorbant donnée, notée $\beta\in ]0,\mu(\Gamma)[$, l'énergie de l'onde acoustique solution de $(P_H)$ par rapport à la distribution choisie $\chi$ est définie par  : 
+\[J(\chi):=\int_{\Omega} |p(\chi)|^2 dx = \|p(\chi)\|_{L^2(\Omega)}^2\]
+où son ensemble de définition, l'ensemble des distributions admissibles, est noté
+\[ U_{ad}(\beta) := \left\{\chi \in L^{\infty}(\Gamma) \, \middle| \, \forall x \in \Gamma, \chi(x) \in \{0,1\}, 0 < \beta = \int_{\Gamma} \chi \, d\mu < \mu(\Gamma)\right\} .\]
+Le problème de minimisation revient à chercher $\chi^*$ optimal, c'est-à-dire tel que $\displaystyle J(\chi^*) = \inf_{\chi \in U_{ad}(\beta)}J(\chi).$
+\end{tcolorbox}
+\subsection{Méthode de relaxation}
+
+Le problème est que l'ensemble des formes admissibles \(U_{ad}(\beta)\) n'est pas fermé pour la convergence faible-* de \(L^\infty(\Gamma)\) : si une suite de fonctions caractéristiques \((\chi_n)\) converge faiblement-* dans \(L^\infty(\Gamma)\) vers une fonction \(h \in L^\infty(\Gamma)\), il se peut que \(h\) ne soit pas à valeur dans \{0,1\}. \(U_{ad}(\beta)\) n'est pas faiblement-* compact.
+
+
+Pour remédier à ce problème, on considère un espace plus général  $U_{ad}^*(\beta)$ 
+
+
+\[ U_{ad}^*(\beta) := \left\{\chi \in L^{\infty}(\Gamma) \, \middle| \, \forall x \in \Gamma, \chi(x) \in [0,1], 0 < \beta = \int_{\Gamma} \chi \, d\mu < \mu(\Gamma)\right\} \]
+
+On note souvent $J^*$ l'extension naturelle de $J$ sur l'espace relaxé $U_{ad}^*(\beta)$, ce que l'on fera ici.
+On a alors le résultat suivant:
+
+\begin{tcolorbox}[colback=green!5!white,colframe=green!75!black,title=Théorème 5.1.1: Continuité de l'énergie]
+
+(i) L'application $\chi\longrightarrow p(\chi)$ est un opérateur continu et compact de $L^\infty(\Gamma)$ dans $V(\Omega)$;\\
+
+(ii) L'application $J^*$ est continue sur $U_{ad}^*(\beta)$.
+
+\end{tcolorbox}
+
+\textbf{Preuve :} Soit $\chi_m$ une suite qui converge faiblement* vers $\chi$ dans $L^{\infty}(\Gamma)$. Soit le $p_m$ correspondant à la solution de $(P_H)$ pour $\chi_m$ et $p$ celle pour le $\chi$. Alors $v_m = p_m - p $ est solution de :
+\[
+    (P_{H,m}) \hspace{2pt} : \hspace{2pt}
+    \begin{cases}
+    \displaystyle \Delta v_m + k_0^2\Big(1 - \frac{iM_0}{k_0}\frac{\partial}{\partial x}\Big)^2v_m = 0 \\
+    \displaystyle Z\frac{\partial v_m}{\partial n} + ik_0Z_0\chi_m \Tr \Bigl[ \Bigl(1-i \frac{M_0}{k_0} \Big(\frac{\partial}{\partial x} + \frac{\partial}{\partial y}\Big) \Bigr)^2v_m \Bigr] = h_m \text{ sur } \Gamma = \Gamma_1 \sqcup \Gamma_2
+    \\
+    \displaystyle \Tr(v_m) = 0 \text{ sur } \Gamma_{in} \\
+    \displaystyle \frac{\partial v_m}{\partial n} + ik \Tr(v_m) = 0 \text{ sur } \Gamma_{out}
+    \end{cases} 
+\]
+où $h_m = \displaystyle - ik_0Z_0(\chi_m - \chi)\Tr \Bigl[ \Bigl(1-i \frac{M_0}{k_0} \Big(\frac{\partial}{\partial x} + \frac{\partial}{\partial y}\Big) \Bigr)^2p \Bigr]$.\\
+
+Ce problème est bien posé : en effet, la seule différence avec la formulation variationnelle (\ref{eq:FV}) est la forme linéaire continue, ce qui n'affecte pas la validité du théorème de Fredholm.
+
+En exploitant le caractère bien posé du problème, on écrit \cite{3} :
+
+\begin{equation}
+\label{eq:Ineg}
+\forall q\in V(\Omega), (v_m, q )_{V(\Omega),\chi_m} \leq C_1 |(h_m, \Tr(q))_{L^2(\Gamma)}|
+\end{equation}
+et
+\begin{equation}
+\lVert v_m \rVert_{V(\Omega),\chi_m} 
+\leq C_1  \lVert \chi - \chi_m \rVert_{L^\infty(\Gamma)} .
+\end{equation}
+
+
+Comme $\chi_m \stackrel{\ast}{\rightharpoonup} \chi$ dans $L^\infty(\Gamma)$, alors la suite $(\chi_m)_{m \in \mathbb{N}}$ est bornée dans $L^\infty(\Gamma)$ et donc il en va de même pour $(\chi - \chi_m)_{m \in \mathbb{N}}$.\\
+
+\( p \) est la solution faible de ($P_H$) associée à la fonction \( \chi \), il appartient donc à \( V(\Omega) \) et sa trace sur \( \Gamma \) est bien définie et appartient naturellement à \( L^2(\Gamma) \). De plus, la norme de la trace de \( p \) sur \( \Gamma \) ne dépend pas de \( m \).
+
+
+Ainsi $(v_m)_{m \in \mathbb{N}}$ est bornée dans $V(\Omega)$, qui est un Hilbert. Il existe donc une sous-suite qui converge faiblement : 
+\begin{center}
+    $\exists (v_{m_j})_{j \in \mathbb{N}} \subset (v_m)_{m \in \mathbb{N}}$ et $v \in V(\Omega) : v_{m_j} \rightharpoonup v$ dans $V(\Omega)$.
+\end{center}
+
+Montrons que $v = 0$. Selon (\ref{eq:Ineg}):
+
+\begin{equation}
+\begin{aligned}
+\lVert v_{m_j} \rVert^2_{V(\Omega),\chi_{m_j}}\leq C_1 \Big|\int_{\Gamma} k_0Z_0(\chi_{m_j} - \chi)\Tr \Bigl[ \Bigl(1-i \frac{M_0}{k_0} \Big(\frac{\partial}{\partial x} + \frac{\partial}{\partial y}\Big) \Bigr)^2p \Bigr] \overline{\Tr(v_{m_j})}d\mu\Big|
+\end{aligned}
+\end{equation}
+Par compacité de l'opérateur  $\Tr \circ \iota_{V(\Omega)\to H^1(\Omega)}: V(\Omega) \longrightarrow  L^2(\Gamma)$, il en découle que $\Tr(v_{m_j}) \longrightarrow \Tr(v)$ quand $j \longrightarrow +\infty$. \\
+
+Ayant vu que $\chi_m - \chi \stackrel{\ast}{\rightharpoonup}0$, on peut conclure que :
+\begin{equation}
+\begin{aligned}
+\lVert v_{m_j} \rVert^2_{V(\Omega),\chi_{m_j}} \longrightarrow 0
+\end{aligned}
+\end{equation}
+
+En particulier, $\|\nabla v_{m_j}\|_{L^2(\Omega)} \to 0$ lorsque $j \to +\infty$.
+
+Cette norme étant équivalente à la norme $H^1(\Omega)$ et par l'inégalité de Poincaré, on peut enfin conclure que $v = 0$.\\
+
+On a alors montré que $0$ est l'unique valeur d'adhérence faible de la suite $(v_m)$. Donc $v_m\rightharpoonup 0$, et en appliquant le même raisonnement ci-dessus, on a aussi $v_m\xrightarrow{m\to \infty} 0$.\\
+
+En conclusion, nous avons établi que de $\chi_k \rightharpoonup^* \chi$ dans $L^\infty(\Gamma)$, il découle que $\chi \in U_{ad}^*(\beta)$ et $p(\chi_m) \longrightarrow p(\chi)$ dans $V(\Omega)$. Nous en déduisons directement la continuité de $J^*$ sur $U_{ad}^*(\beta)$. $\square$

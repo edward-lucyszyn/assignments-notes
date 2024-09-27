@@ -1,0 +1,95 @@
+\documentclass[a4paper, 11pt]{article}
+
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{tikz}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{siunitx}
+\usepackage{float} % to use the [H] option
+\usepackage{setspace}
+\usepackage{boites}
+\usepackage{lastpage}
+
+\usetikzlibrary{babel}
+\usetikzlibrary{math} 
+
+\pagestyle{fancy}
+\fancyhead[R]{Correction TD1 Reinforcement PhyQ}
+\fancyhead[L]{Gabriel \textsc{SEIGNEUR}, Edward \textsc{LUCYSZYN}}
+
+\renewcommand\footrulewidth{}
+\fancyfoot[C]{\thepage/\pageref{LastPage}}
+
+\hypersetup{hidelinks}
+
+\title{\textbf{Correction TD1 Renforcement Physique Quantique}}
+\author{Gabriel \textsc{SEIGNEUR} \and Edward \textsc{LUCYSZYN}}
+\date{28th February 2024}
+
+\newcommand{\bra}[1]{\langle #1|}
+\newcommand{\ket}[1]{|#1\rangle}
+\newcommand{\braket}[2]{\langle #1 |#2\rangle}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\renewcommand{\H}{\mathcal{H}}
+
+\begin{document}
+
+\begin{titlepage}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\center
+\includegraphics[scale=0.5]{logo-CS-PS.png} \\[1cm]
+\HRule \\[0.4cm]
+{ \huge \bfseries Reinforcement Exercises in Quantum Physics and Statistics\\[0.15cm] TD 1 - Introduction to Quantum Physics \\[0.15cm]}
+\HRule \\[1.5cm]
+\LARGE Department of Structures, Properties, and Solid State Modelling \\ [2.90cm]
+\begin{minipage}{0.4\textwidth}
+\begin{spacing}{1.125}
+\begin{flushleft} \Large
+    \textit{Authors: } \\
+	Gabriel \textsc{Seigneur} \\
+    Edward \textsc{Lucyszyn}
+\end{flushleft}
+\end{spacing}
+\end{minipage} 
+\\[1cm]
+\begin{minipage}{0.4\textwidth}
+\begin{spacing}{1.125}
+\begin{flushleft} \Large
+    \textit{Acknowledgments: } \\
+	Mehdi \textsc{Ayouz} \\
+    Harry \textsc{Gillingham} \\
+    Hugo \textsc{Hakem} \\
+    And to the previous TAs responsible for this exercise.
+\end{flushleft}
+\end{spacing}
+\end{minipage} 
+\end{titlepage}
+
+\noindent \LARGE \textbf{During the TD}
+\normalsize
+\input{1}
+\input{2}
+\input{7}
+
+\newpage
+\noindent \LARGE \textbf{To do for TD 2}
+\normalsize
+\input{6}
+
+\newpage
+\noindent \LARGE \textbf{Going Further}
+\normalsize
+\input{3}
+\input{4}
+\input{5}
+
+\end{document}

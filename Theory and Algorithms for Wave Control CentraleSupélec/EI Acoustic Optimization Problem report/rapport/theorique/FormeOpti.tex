@@ -1,0 +1,17 @@
+\section{Existence de la forme optimale}
+
+On rappelle que notre objectif principal est le suivant :
+
+\begin{tcolorbox}[colback=green!5!white,colframe=green!75!black,title=Définition et Théorème 7.1: Résolution du problème de minimisation de l'énergie]
+
+Pour une quantité de matériau absorbant donnée à répartir sur la paroi du réacteur d'avion, notée $\beta\in ]0,\mu(\Gamma)[$, le problème de minimisation revient à prouver l'existence d'une distribution $\chi^*\in U_{ad}^*(\beta)$ optimale, c'est-à-dire telle que $\displaystyle J^*(\chi^*) = \inf_{\chi \in U_{ad}^*(\beta)}J^*(\chi).$\\
+Sous les hypothèses du problème différentiel $(P)$ ou de son problème homogène associé $(P_H)$, l'existence d'une telle distribution optimale est assurée.
+
+\end{tcolorbox}
+\textbf{Preuve :} On se munit d'une suite minimisante $\displaystyle (\chi_k)_{k\in \mathbb{N}}\in (U^*_{ad}(\beta))^\mathbb{N}$ telle que $\displaystyle J^*(\chi_k) \xrightarrow{k\to +\infty} \inf_{\chi \in U^*_{ad}(\beta)}J^*(\chi)$.
+D'après les sections théoriques qui précèdent et [Poly Théorique ST], comme le caractère bien posé du problème est assuré, $U^*_{ad}(\beta)$ est un compact de $L^\infty(\Gamma)$ pour la convergence faible-*. Quitte à s'intéresser à une sous-suite de la suite minimisante, on peut supposer que $\chi_k \stackrel{\ast}{\rightharpoonup} \chi^*\in U^*_{ad}(\beta)$.
+D'après la continuité de $J$, on obtient que
+\[J^*(\chi^*) = \lim_{k\to +\infty} J^*(\chi_k) = \inf_{\chi \in U^*_{ad}(\beta)}J^*(\chi)\]
+Ce qui prouve l'existence d'une distribution optimale dans $U^*_{ad}(\beta)$. $\square$ \\ \\
+On notera une fois de plus que $\chi^*$ n'est pas nécessairement une fonction caractéristique, donc une telle distribution optimale aura des applications très limitées à un niveau pratique et/ou industriel.\\ \\
+Pour des applications numériques, la recherche de cette distribution optimale est possible dès lors qu'on calcule sa dérivée et qu'on trouve $\langle J'(\chi), \chi_0\rangle = 0$.

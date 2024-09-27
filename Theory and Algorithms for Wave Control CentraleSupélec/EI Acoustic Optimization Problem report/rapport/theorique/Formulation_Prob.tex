@@ -1,0 +1,229 @@
+\section{Etude du problème variationnel}
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=Definition 4.0: Problème différentiel]
+On souhaite résoudre le problème différentiel suivant d'un point de vue théorique:
+
+\[
+    (P) \hspace{2pt} : \hspace{2pt}
+    \begin{cases}
+    \displaystyle \Delta p + k_0^2\Big(1 - \frac{iM_0}{k_0}\frac{\partial}{\partial x}\Big)^2p = f \in L^2(\Omega) \hfill (i)\\
+    \displaystyle Z\frac{\partial p}{\partial n} + ik_0Z_0\chi \Tr \Bigl[ \Bigl(1-i \frac{M_0}{k_0} \Big(\frac{\partial}{\partial x} + \frac{\partial}{\partial y}\Big) \Bigr)^2p \Bigr] = 0$ sur $\Gamma = \Gamma_1 \sqcup \Gamma_2 \hspace*{2cm} \hfill (ii)
+    \\
+    \displaystyle \Tr(p) = g $ sur $ \Gamma_{in} \hfill (iii) \\
+    \displaystyle \frac{\partial p}{\partial n} + ik \Tr(p) = 0 $ sur $\Gamma_{out} \hfill (iv)
+    \end{cases} 
+\]
+
+avec : $\displaystyle Z_0 \in \mathbb{R}$,  $Z \in \{z \in \mathbb{C} \hspace{2pt} | \hspace{2pt} Re(z) > 0\}$, $\chi : \Gamma \to \{0,1\} $, $\displaystyle M_0 = \frac{u_0}{c_0}$, $\displaystyle k_0 = \frac{\omega}{c_0}$, $\displaystyle k = \frac{\omega}{u_0}$.
+
+$M_0$ dit "Nombre de Mach" est le rapport entre la vitesse du fluide et la célérité d'une onde acoustique, $k_0$ est le "nombre d'onde acoustique" et $k$ est le "nombre d'onde fluide".
+
+On rappelle également que $\partial \Omega = \Gamma \sqcup \Gamma_{in} \sqcup \Gamma_{out}$. \\
+On n'oubliera pas que $\Omega$ peut être à bord localement lipschitzien tout comme à bord fractal, donc  $\partial \Omega$ n'est pas nécessairement régi par la mesure de Lebesgue. On appelera donc $\mu$ la mesure choisie sur le bord.
+
+\end{tcolorbox}
+
+\subsection{Formulation variationnelle}
+
+Notre objectif sera de trouver le problème variationnel équivalent que l'on résoudra sur un espace de Hilbert $V(\Omega)\subset H^1(\Omega)$, pour l'instant indéterminé. \\
+
+Un premier problème que l'on rencontre est, lors de l'application de la formule de Green pour trouver le problème variationnel, l'apparition d'un terme $\displaystyle \int_{\Gamma_{in}} \frac{\partial p}{\partial n} \Tr(\Bar{q})\hspace{2pt} d\mu$, qui ne peut pas s'exprimer en fonction de $g$ sur $\Gamma_{in}$. \\
+
+Pour y remédier, on applique une méthode dite de "translation" :
+
+\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=Proposition 4.1.1: Problème différentiel homogène]
+n considère $p_s = p_h + p_g$ tel que $p_s$ soit solution du problème originel et $p_g\in H^1(\Omega)$ un "paramètre" qui vérifie $(ii),(iii)$ et $(iv)$. $p_h$ vérifie alors l'équation homogène associée :\\
+
+\[
+    (P_H) \hspace{2pt} : \hspace{2pt}
+    \begin{cases}
+    \displaystyle \Delta p + k_0^2\Big(1 - \frac{iM_0}{k_0}\frac{\partial}{\partial x}\Big)^2p = \Tilde{f} \in L^2(\Omega) \hfill (i')\\
+    \displaystyle Z\frac{\partial p}{\partial n} + ik_0Z_0\chi \Tr \Bigl[ \Bigl(1-i \frac{M_0}{k_0} \Big(\frac{\partial}{\partial x} + \frac{\partial}{\partial y}\Big) \Bigr)^2p \Bigr] = 0$ sur $\Gamma = \Gamma_1 \sqcup \Gamma_2 \hspace*{2cm} \hfill (ii')
+    \\
+    \displaystyle \Tr(p) = 0 $ sur $ \Gamma_{in} \hfill (iii') \\
+    \displaystyle \frac{\partial p}{\partial n} + ik \Tr(p) = 0 $ sur $\Gamma_{out} \hfill (iv')
+    \end{cases} 
+\]
+où \[
+    \displaystyle \Tilde{f} = f - \Delta p_g - k_0^2\Big(1 - \frac{iM_0}{k_0}\frac{\partial}{\partial x}\Big)^2p_g\]
+\end{tcolorbox}
+Il suffit de s'assurer que $p_g$ soit assez régulière de sorte que $\Tilde{f}\in L^2(\Omega)$.
+
+On s'intéresse alors uniquement au problème homogène dans ce rapport. Soit $q\in V(\Omega)$ une fonction test de notre espace de Hilbert et $p$ solution de $(P_H)$ :
+
+\begin{equation}
+    (i') \Longrightarrow -\int_{\Omega} \Delta p \hspace{2pt} \overline{q}\hspace{2pt} d\lambda -k_0^2 \int_{\Omega} pq\hspace{2pt} d\lambda +2iM_0 k_0\int_{\Omega} \frac{\partial p}{\partial x}\overline{q} d\lambda +M_0 ^2 \int_{\Omega} \frac{\partial^2 p}{\partial x^2} \overline{q}\hspace{2pt} d\lambda = -\int_{\Omega} \Tilde{f}\overline{q}\hspace{2pt} d\lambda
+\end{equation}
+
+On a d'une part, d'après la formule de Green :
+
+\begin{equation}
+    \int_{\Omega} \Delta p\hspace{2pt} \overline{q}\hspace{2pt} d\lambda=-\int_{\Omega} \nabla p \nabla \overline{q}\hspace{2pt} d\lambda + \int_{\partial \Omega} \frac{\partial p}{\partial n} \Tr(\overline{q}) \hspace{2pt} d\mu
+\end{equation}
+
+
+\begin{equation}
+    \int_{\Omega} \frac{\partial^2 p}{\partial x^2}\overline{q} d\lambda = -\int_{\Omega} \frac{\partial p}{\partial x} \frac{\partial \overline{q}}{\partial x}d\lambda + \int_{\partial \Omega} \frac{\partial p}{\partial x} \cdot n_x \Tr(\overline{q})\hspace{2pt} d\mu
+\end{equation}
+
+
+
+Etudions l'intégrale sur le bord :
+
+\begin{equation}
+    \int_{\partial \Omega} \frac{\partial p}{\partial n} \Tr(\overline{q}) \hspace{2pt} d\mu = 
+    -i k \int_{\Gamma_{out}} \Tr(p) \Tr(\overline{q})\hspace{2pt} d\mu \underbrace{-ik_0 \frac{Z_0}{Z}\int_{\Gamma} \Tr \Bigl[ \Bigl(1-i \frac{M_0}{k_0} \Big(\frac{\partial}{\partial x} + \frac{\partial}{\partial y}\Big) \Bigr)^2p \Bigr] \Tr(\overline{q}) \hspace{2pt} \chi \hspace{2pt} d\mu}_{:= \hspace{2pt} C}
+\end{equation}
+
+
+
+Où l'intégrale nommée $C$ vaut:
+
+\begin{equation}
+    C = -ik_0\frac{Z_0}{Z} \biggl[ \int_{\Gamma} \Tr(p) \Tr(\overline{q}) \hspace{2pt} \chi \hspace{2pt} d\mu - 2i\frac{M_0}{k_0} \int_{\Gamma} \Tr \Bigl( \frac{\partial p}{\partial x}+\frac{\partial p}{\partial y} \Bigr) \Tr(\overline{q}) \hspace{2pt} \chi \hspace{2pt} d\mu - \frac{M_0^2}{k_0^2} \int_{\Gamma} \Tr \Bigl( \frac{\partial^2 p}{\partial x^2}+2\frac{\partial^2 p}{\partial x \partial y} + \frac{\partial^2 p}{\partial y^2} \Bigr)\Tr(\overline{q}) \hspace{2pt} \chi  \hspace{2pt} d\mu \biggl]
+\end{equation}
+On peut supposer que la condition au bord est définie presque partout ; en prenant donc cette condition égale à 0 sur le "bord du bord", et en supposant en outre qu'on puisse permuter la dérivée et l'opérateur de trace, cela nous donne :
+
+
+
+\begin{equation} \displaystyle
+    \begin{cases}
+    \displaystyle \int_{\Gamma} \Tr \Bigr(\frac{\partial^2 p}{\partial x^2}\Bigl) \Tr(\overline{q}) \chi \hspace{2pt} d\mu = - \int_{\Gamma} \Tr \Bigl( \frac{\partial p}{\partial x} \Bigr) \Tr \Bigl( \frac{\partial \overline{q}}{\partial x}\Bigr)\chi d\mu \\
+
+    \displaystyle \int_{\Gamma} \Tr \Bigr(\frac{\partial^2 p}{\partial y^2}\Bigl) \Tr(\overline{q})\chi \hspace{2pt} d\mu = - \int_{\Gamma} \Tr \Bigl( \frac{\partial p}{\partial y} \Bigr) \Tr \Bigl( \frac{\partial \overline{q}}{\partial y}\Bigr)\chi d\mu \\
+
+    \displaystyle \int_{\Gamma} \Tr \Bigr(\frac{\partial^2 p}{\partial x \partial y}\Bigl) \Tr(\overline{q}) \chi \hspace{2pt} d\mu = - \int_{\Gamma} \Tr \Bigl( \frac{\partial p}{\partial x} \Bigr) \Tr \Bigl( \frac{\partial \overline{q}}{\partial y}\Bigr) \chi d\mu = - \int_{\Gamma} \Tr \Bigl( \frac{\partial p}{\partial y} \Bigr) \Tr \Bigl( \frac{\partial \overline{q}}{\partial x}\Bigr)\chi d\mu
+    \end{cases}
+\end{equation}
+L'intérêt de la dernière égalité est de garantir la symétrie de la forme bilinéaire qui adviendra. On obtient donc : 
+\begin{equation}
+    \int_{\Gamma} \Tr \Bigr(\frac{\partial^2 p}{\partial x^2}+2\frac{\partial^2 p}{\partial x \partial y} + \frac{\partial^2 p}{\partial y^2} \Bigl) \Tr(\overline{q})\chi \hspace{2pt} d\mu = -\sum_{(\alpha,\beta)\in \{x,y\}^2} \int_{\Gamma} \Tr \Bigl( \frac{\partial p}{\partial \alpha} \Bigr) \Tr \Bigl( \frac{\partial \overline{q}}{\partial \beta}\Bigr)\chi \hspace{2pt} d\mu
+\end{equation}
+\begin{tcolorbox}[colback=green!5!white,colframe=green!75!black,title=Théorème 4.1.2: Formulation variationnelle]
+$(P_H)$ est finalement la formulation variationelle suivante:
+\begin{equation}
+\label{eq:FV}
+\forall q\in V(\Omega), A(p,q) = l(q)
+\end{equation}
+où
+\[A(p,q) = (\nabla p, \nabla q)_{(L^2(\Omega))^2} + ik(\Tr(p),\Tr(q))_{L^2(\Gamma_{out})} + C(p,q) -k_0^2(p,q)_{L^2(\Omega)} + 2iM_0k_0\Big(\frac{\partial p}{\partial x}, q\Big)_{L^2(\Omega)} \]
+\[-M_0^2\Big(\frac{\partial p}{\partial x},\frac{\partial q}{\partial y}\Big)_{L^2(\Omega)}+ M_0^2\Big(\frac{\partial p}{\partial x}\cdot n_x,\Tr(q)\Big)_{B'(\partial \Omega),B(\partial \Omega)}\]
+puis
+\[l(q) = -(\Tilde{f},q)_{L^2(\Omega)}\]
+avec
+\[C(p,q) = -ik_0\frac{Z_0}{Z} \biggl[ \int_{\Gamma} \Tr(p) \Tr(\overline{q}) \hspace{2pt} \chi \hspace{2pt} d\mu - 2i\frac{M_0}{k_0} \int_{\Gamma} \Tr \Bigl( \frac{\partial p}{\partial x}+\frac{\partial p}{\partial y} \Bigr) \Tr(\overline{q}) \hspace{2pt} \chi \hspace{2pt} d\mu\]
+\[+ \frac{M_0^2}{k_0^2}\int_{\Gamma} \Tr \Bigl( \frac{\partial p}{\partial x}+\frac{\partial p}{\partial y}\Bigr)\Tr\Bigl( \frac{\partial \overline{q}}{\partial x}+\frac{\partial \overline{q}}{\partial y}\Bigr) \hspace{2pt} \chi  \hspace{2pt} d\mu \biggl].\]
+\end{tcolorbox}
+\subsection{Première approche de l'espace des solutions}
+
+Ayant trouvé l'expression de la formulation variationnelle, il reste à déterminer notre espace de résolution $V(\Omega)$. \\
+On peut d'abord imposer sur $V(\Omega)$ que $\displaystyle \Tr(q)_{|\Gamma_{in}} = 0$ pour bénéficier de l'inégalité de Poincaré :
+\[\forall q\in V(\Omega), \|q\|_{H^1(\Omega)} \leq K(\Omega)\cdot \|\nabla q\|_{L^2(\Omega)}\]
+
+Comme la trace des dérivées directionnelles de q interviennent dans l'expression de la formulation variationnelle, il est nécessaire que $\displaystyle \frac{\partial q}{\partial x},\frac{\partial q}{\partial y}\in H^1(\Omega)$. On peut alors poser :
+
+\[V(\Omega)=\{q \in H^1(\Omega), \Tr(q)=0 \text{ sur } \Gamma_{in}, \frac{\partial q}{\partial x}, \frac{\partial q}{\partial y} \in H^1(\Omega) \} = H^2(\Omega) \cap (\Tr^{|\Gamma_{in}})^{-1}(\{0\}) \]
+
+$H^2(\Omega)$ s'injecte continûment dans $H^1(\Omega)$ (car $\|\cdot\|_{H^1(\Omega)} \leq \|\cdot\|_{H^2(\Omega)}$)
+et donc $V(\Omega) = Ker(\Tr^{|\Gamma_{in}}\circ \iota)$ est un fermé de $H^2(\Omega)$ en tant que noyau de l'opérateur Trace qui est continu, et $\Gamma_{in}$ un fermé de $\partial \Omega$.\\
+
+En exploitant l'inégalité de Poincaré, on pose alors la norme 
+$\|\cdot\|_{V(\Omega)}$ :
+\[\forall q\in V(\Omega), \|q\|_{V(\Omega)}^2:= \|q\|_{H^2(\Omega)}^2 - \|q\|_{L^2(\Omega)}^2.\]
+
+D'après ce qui précède, $(V(\Omega), \|\cdot\|_{V(\Omega)})$ est un espace de Hilbert.
+
+\subsection{Deuxième approche de l'espace des solutions}
+
+Une complication qui survient dans l'approche qui précède est que la norme choisie ne peut permettre de résoudre le caractère bien posé de notre problème originel. Nous sommes donc obligés d'agrandir notre espace de solutions pour bénéficier d'une norme plus adaptée. \\
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=Definition 4.3.1 : Espace des solutions]
+On dit alors qu'une fonction $v\in H^1(\Omega)$ est dans l'espace des solutions $V(\Omega)$ si elle vérifie:
+
+\begin{equation}
+\label{eq:soleq}
+    \begin{cases}
+    \displaystyle \Delta q = \varphi \in L^2(\Omega) \hfill (i)
+    \\
+    \displaystyle Z\frac{\partial q}{\partial n} + ik_0Z_0\chi \Tr(q) = \psi \in L^2(\Gamma) \hfill \hspace{45pt} (ii)
+    \\
+    \displaystyle \Tr(q) = 0 \text{ sur } \Gamma_{in} \hfill (iii)
+    \\
+    \displaystyle \frac{\partial q}{\partial n} + ik \Tr(q) = 0 \text{ sur } L^2(\Gamma_{out}) \hfill (iv)
+    \end{cases} 
+\end{equation}
+
+On peut alors réexprimer les solutions de (\ref{eq:soleq}) par la formulation variationnelle :
+
+\[\forall h\in V(\Omega), A^*(q,h) = l^*(\varphi,\psi,h)\]
+où
+\[A^*(q,h) =  (\nabla q, \nabla h)_{(L^2(\Omega))^2}+ik(\Tr(q),\Tr(h))_{L^2(\Gamma_{out})}+\frac{ik_0Z_0}{Z}\int_\Gamma \Tr(q)\overline{\Tr(h)}\chi d\mu\]
+et
+\[l^*(\varphi,\psi,h) = \frac{1}{Z}(\psi, \Tr(h))_{L^2(\Gamma)} - (\varphi, h)_{L^2(\Omega)}\]
+
+On pose alors l'espace des solutions $\displaystyle V(\Omega) = \{q\in H^1(\Omega), \exists (\varphi,\psi)\in L^2(\Omega)\times L^2(\Gamma), \forall h\in V(\Omega), A^*(q,h) = l^*(\varphi,\psi,h)\}$, muni de la norme $\displaystyle \|\cdot\|_{V(\Omega)}:= \|\nabla \cdot\|_{(L^2(\Omega))^2}$. \\
+
+\end{tcolorbox}
+
+Montrons à présent que ce problème est bien posé. D'après le théorème de représentation de Riesz, sachant que les formes suivantes sont linéaires/sesquilinéaires et continues, on bénéficie d'opérateurs linéaires continus telles que:
+\[\begin{cases}
+    \displaystyle ik(\Tr(q),\Tr(h))_{L^2(\Gamma_{out})} = (A_{k}q, h)_{V(\Omega)}, A_k:V(\Omega)\to V(\Omega);
+    \\
+    \displaystyle \frac{ik_0Z_0}{Z}\int_\Gamma \Tr(q)\overline{\Tr(h)}\chi d\mu = (A_{\chi}q, h)_{V(\Omega)}, A_\chi:V(\Omega)\to V(\Omega);
+    \\
+    \displaystyle \frac{1}{Z}(\psi, \Tr(h))_{L^2(\Gamma)} = (A_{\psi}\psi, h)_{V(\Omega)}, A_{\psi}:L^2(\Gamma)\to V(\Omega);
+    \\
+    \displaystyle - (\varphi, h)_{L^2(\Omega)} = (A_{\varphi}\varphi, h)_{V(\Omega)}, A_{\varphi}:L^2(\Omega)\to V(\Omega).
+\end{cases}\]
+
+En posant $K = -A_k - A_\chi:V(\Omega)\to V(\Omega)$, le problème variationnel devient:
+\[\forall h\in V(\Omega), ((Id-K)q,h)_{V(\Omega)} = (A_{\psi}\psi+A_{\varphi}\varphi, h)_{V(\Omega)}\]
+Ce qui revient donc à résoudre $(Id-K)q = A_{\psi}\psi+A_{\varphi}\varphi$ sur $V(\Omega)$. \\
+$A_k$ et $A_\chi$ sont tous deux compacts, grâce à la compacité des opérateurs $\Tr^{|\Gamma}$ et $\Tr^{|\Gamma_{out}}$ ($\Gamma,\Gamma_{out}$ sont compacts). À titre d'exemple, on montre la compacité de $A_k$ : \\
+
+Soient $\displaystyle (q_m)_{m\in \mathbb{N}}\in (V(\Omega))^\mathbb{N}$ et $q\in V(\Omega)$ tels que $q_m\rightharpoonup q$ dans $V(\Omega)$. Par continuité de $\displaystyle \iota_{V(\Omega)\to H^1(\Omega)}$ et compacité de $\displaystyle \Tr^{|\Gamma_{out}}$, $\displaystyle \Tr(q_m)\xrightarrow{L^2(\Gamma_{out})}\Tr(q)$. Par continuité de $A_k$, on a aussi $\displaystyle \Tr(A_kq_m)\xrightarrow{L^2(\Gamma_{out})}\Tr(A_kq)$. Donc
+\[\|A_kq_n\|^2_{V(\Omega)} = ik(\Tr(q_n),\Tr(A_kq_n))_{L^2(\Gamma_{out})}\longrightarrow ik(\Tr(q),\Tr(A_kq))_{L^2(\Gamma_{out})} = \|A_kq\|^2_{V(\Omega)}\]
+
+Et $A_k$ est compact. Donc $K$ est compact par somme d'opérateurs compacts. \\
+Ainsi le théorème de Fredholm s'applique :
+\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=Proposition 4.3.1 : Espace de solutions de Hilbert]
+Il existe une unique solution $q$ à la formulation variationnelle découlant de (\ref{eq:soleq}), qui dépend aussi continuellement des paramètres $(\varphi,\psi)\in L^2(\Omega)\times L^2(\Gamma)$.
+Donc $\displaystyle (V(\Omega),\|\cdot\|_{V(\Omega)})$ est un espace de Hilbert.
+\end{tcolorbox}
+\subsection{Caractère bien posé}
+
+Notre objectif est maintenant de montrer le caractère bien posé du problème en utilisant le théorème de Fredholm. \\
+
+On remarque tout d'abord que la norme qui suit est une norme équivalente sur $V(\Omega)$ (car $M_0 < 1$): \[\forall q\in V(\Omega), (\|q\|'_{V(\Omega)})^2:= \|\nabla q\|_{(L^2(\Omega))^2}^2 - M_0^2\Big\|\frac{\partial q}{\partial x}\Big\|_{L^2(\Omega)}^2+\Big\|\Tr\Big(\frac{\partial q}{\partial x}+\frac{\partial q}{\partial y}\Big)\Big\|_{L^2(\Gamma)}^2.\]
+
+Écrivons alors la formulation variationnelle à l'aide du produit scalaire sous-jacent, où l'on reprend les notations des parties précédentes. On suppose de plus que $\chi = 1$. Soit $q\in V(\Omega)$, on commence par décomposer $A(p,q)$ en décomposition de type Fredholm :
+
+\[A(p,q) = \Theta(p,q) + \xi(p,q)\]
+où
+\[\Theta(p,q) = (\nabla p, \nabla q)_{(L^2(\Omega))^2} -i\frac{Z_0M_0^2}{Zk_0}\Big( \Tr \Bigl( \frac{\partial p}{\partial x}+\frac{\partial p}{\partial y}\Bigr),\Tr\Bigl( \frac{\partial q}{\partial x}+\frac{\partial q}{\partial y}\Bigr)\Big)_{L^2(\Gamma)} -M_0^2\Big(\frac{\partial p}{\partial x},\frac{\partial q}{\partial y}\Big)_{L^2(\Omega)}\]
+et
+
+\[\xi(p,q) = ik(\Tr(p),\Tr(q))_{L^2(\Gamma_{out})} -ik_0\frac{Z_0}{Z} (\Tr(p), \Tr(q))_{L^2(\Gamma)} - 2\frac{M_0Z_0}{Z} \Big(\Tr \Bigl( \frac{\partial p}{\partial x}+\frac{\partial p}{\partial y} \Bigr), \Tr(q)\Big)_{L^2(\Gamma)}  \]
+\[-k_0^2(p,q)_{L^2(\Omega)} + 2iM_0k_0\Big(\frac{\partial p}{\partial x}, q\Big)_{L^2(\Omega)}+ M_0^2\Big(\frac{\partial p}{\partial x}\cdot n_x,\Tr(q)\Big)_{B'(\partial \Omega),B(\partial \Omega)}\]
+
+Tout d'abord, d'après l'expression de la norme équivalente, $\Theta$ est une forme sesquilinéaire, continue et à symétrie hermitienne. D'un autre côté, $\xi$ est une forme sesquilinéaire continue. Cela nous fournit, d'après le théorème de représentation de Riesz, une application linéaire continue $\displaystyle \Xi:V(\Omega)\to V(\Omega)$ telle que \[\forall q,h\in V(\Omega), \xi(q,h) = (\Xi q, h)_{V(\Omega)}\]
+
+Par un raisonnement similaire à la partie précédente, en montrant que $(q_n\rightharpoonup q) \Longrightarrow (\Xi q_n \longrightarrow \Xi q)$, on en déduit que $\Xi$ est un opérateur compact. \\ \\
+Montrons à présent que $\Theta$ est coercive. Soit alors $p\in V(\Omega)$: \\
+\[\Theta(p,p) = (1-M_0^2)\Big\|\frac{\partial p}{\partial x}\Big\|^2_{L^2(\Omega)} + \Big\|\frac{\partial p}{\partial y}\Big\|^2_{L^2(\Omega)}-\frac{Z_0M_0^2Z_I}{|Z|^2k_0}\Big\| \Tr \Bigl( \frac{\partial p}{\partial x}+\frac{\partial p}{\partial y}\Bigr)\Big\|^2_{L^2(\Gamma)}-i\frac{Z_0M_0^2Z_R}{|Z|^2k_0}\Big\| \Tr \Bigl( \frac{\partial p}{\partial x}+\frac{\partial p}{\partial y}\Bigr)\Big\|^2_{L^2(\Gamma)}\]
+
+\[\Theta(p,p) = (1-M_0^2)\Big\|\frac{\partial p}{\partial x}\Big\|^2_{L^2(\Omega)} + \Big\|\frac{\partial p}{\partial y}\Big\|^2_{L^2(\Omega)}-i\frac{Z_0M_0^2\Bar{Z}}{|Z|^2k_0}\Big\| \Tr \Bigl( \frac{\partial p}{\partial x}+\frac{\partial p}{\partial y}\Bigr)\Big\|^2_{L^2(\Gamma)}\]
+
+On note \(iZ_0\Bar{Z} =  |Z_0\Bar{Z}| e^{i\theta}\), où \(\displaystyle\theta = \Arg(Z_0\Bar{Z}) - \frac{\pi}{2} \equiv \frac{\pi}{2} - \Arg(Z)\) \( [\pi]\). On note alors
+\[\lambda := (1-M_0^2)\Big\|\frac{\partial p}{\partial x}\Big\|^2_{L^2(\Omega)} + \Big\|\frac{\partial p}{\partial y}\Big\|^2_{L^2(\Omega)}; \beta := \Big|\frac{Z_0M_0^2\Bar{Z}}{|Z|^2k_0}\Big|\Big\| \Tr \Bigl( \frac{\partial p}{\partial x}+\frac{\partial p}{\partial y}\Bigr)\Big\|^2_{L^2(\Gamma)}.\]
+On écrit $\Theta$ sous la forme suivante en s'inspirant de l'article \cite{2} ;\\
+\[
+|\Theta(p, p)|^2 = | \lambda - e^{i\theta}\beta|^2 = (\lambda - \beta)^2 + 4\lambda\beta \sin^2\left(\frac{\theta}{2}\right) \geq \sin^2\left(\frac{\theta}{2}\right) (\lambda + \beta)^2 \]
+
+\[ |\Theta(p, p)| \geq \Big|\sin\left(\frac{\theta}{2}\right)\Big| \min \left( 1 - M_0^2, \Bigl|\frac{Z_0M_0^2}{Zk_0}\Bigl| \right) \lVert p \rVert_{V(\Omega)}^2. \]
+
+
+On a de plus $\displaystyle\sin\left(\frac{\theta}{2}\right)\neq 0$ (sinon $\displaystyle \Arg(Z) \equiv \frac{\pi}{2}$ $[\pi]$ et $\Re e(Z) = 0$). Donc $\Theta$ est coercive et on peut alors appliquer le théorème de Fredholm:
+
+\begin{tcolorbox}[colback=green!5!white,colframe=green!75!black,title=Théorème 4.4.1: Caractère bien posé du problème]
+Le problème lié à la formulation variationnelle (\ref{eq:FV}) de $(P_H)$ admet une unique solution $p(\chi)\in V(\Omega)$.
+\end{tcolorbox}

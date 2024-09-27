@@ -1,0 +1,61 @@
+\section{Exercise III: Linear and Logistic Regression}
+
+(a) The cost function is:
+\[
+J(\mathbf{w}) = ||\textbf{Xw} - \textbf{y}||_2^2 + ||\textbf{\Gamma w}||_2^2.
+\]
+We recall the formula for a square matrix $\mathbf{A}$ and a vector $\mathbf{w}$:
+\[\frac{\partial}{\partial \mathbf{w}}(\mathbf{w} \mapsto ||\mathbf{A}\mathbf{w}||_2^2)(\mathbf{w}) = \frac{\partial}{\partial \mathbf{w}}(\mathbf{w} \mapsto \operatorname{Tr}(\mathbf{x}^\intercal \mathbf{A}^\intercal \mathbf{A} \mathbf{w}))(\mathbf{w}) = 2 \mathbf{A}^\intercal \mathbf{A} \mathbf{w};
+\]
+and,
+\[
+    \frac{\partial}{\partial \mathbf{w}}(\mathbf{w} \mapsto \operatorname{Tr}(\mathbf{A}\mathbf{w}))(\mathbf{w}) = \mathbf{A}^\intercal \mathbf{w}.
+\]
+Furthermore,
+\begin{align*}
+    ||\textbf{Xw} - \textbf{y}||_2^2 &= \operatorname{Tr}((\mathbf{X}\mathbf{w} - \mathbf{y})^\intercal (\mathbf{X}\mathbf{w} - \mathbf{y})) \\
+    &= \operatorname{Tr}(\mathbf{w}^\intercal\mathbf{X}^\intercal \mathbf{X} \mathbf{w} - \mathbf{y}^\intercal \mathbf{X} \mathbf{w} - \mathbf{w}^\intercal \mathbf{X}^\intercal \mathbf{y} + \mathbf{y}^\intercal\mathbf{y}) \\
+    &= ||\mathbf{X} \mathbf{w}||_2^2 - 2\operatorname{Tr}(\mathbf{y}^\intercal \mathbf{X} \mathbf{w}) +  ||\mathbf{y}||_2^2).
+\end{align*}
+Thus,
+\[
+    \frac{\partial}{\partial \mathbf{w}}J(\mathbf{w}) = 2\mathbf{X}^\intercal \mathbf{X} \mathbf{w} - 2 \mathbf{X}^\intercal \mathbf{y} + 2\mathbf{\Gamma}^\intercal \mathbf{\Gamma} \mathbf{w}.
+\]
+The minimum appears when the derivative is cancelled, so we have:
+\[
+\frac{\partial}{\partial \mathbf{w^*}}J(\mathbf{w^*}) = 0 \iff 
+\boxed{
+    (\mathbf{X}^\intercal \mathbf{X} + \mathbf{\Gamma}^\intercal \mathbf{\Gamma})\mathbf{w^*} = \mathbf{X}^\intercal \mathbf{y}.
+}
+\]
+(b) With (a), a sufficient and necessary condition on $\Gamma$ guaranteeing that $J(\mathbf{w})$ has a unique minimum $\mathbf{w^*}$ is:
+\[
+    \boxed{\mathbf{X}^\intercal \mathbf{X} + \mathbf{\Gamma}^\intercal \mathbf{\Gamma} \in \mathcal{GL}_d(\mathbb{R}).}
+\]
+In this case, we have:
+\[
+\boxed{
+    \mathbf{w^*} = (\mathbf{X}^\intercal \mathbf{X} + \mathbf{\Gamma}^\intercal \mathbf{\Gamma})^{-1} \mathbf{X}^\intercal \mathbf{y}.}
+\]
+(c) Using Bayes formula: 
+\[
+    f(\mathbf{w} | \mathbf{X}, \mathbf{y}) \propto f(\mathbf{w}) f(\mathbf{y}
+ | \mathbf{x}, \mathbf{w}),
+ \]
+ where $f(\mathbf{w})$ is the normal distribution $\mathcal{N}(0, \Sigma)$. Consequently:
+ \[
+    f(\mathbf{w}) \propto \exp(-\frac{1}{2}\mathbf{w}^{\top} \Sigma^{-1} \mathbf{w}).
+ \]
+Then, since $\Sigma$ is a positive-definite matrix, $\exists \mathbf{S} $ such that $\Sigma = \mathbf{S} \mathbf{S}^{\top}$.
+Assuming a linear regression model (logic assumption because this is a famous model and it will lead to the ridge regression problem), we have:
+\[
+f(\mathbf{y} | \mathbf{X}, \mathbf{w}) = \frac{1}{\sqrt{2\pi}} \exp\left(-\frac{(\mathbf{y} - \mathbf{X}\mathbf{w})^{\top} (\mathbf{y} - \mathbf{X}\mathbf{w})}{2}\right) \propto \exp(-\frac{1}{2} ||\mathbf{y} - \mathbf{X}\mathbf{w}||_2^2).\]
+Using the log, maximizing the posterior regression leads to maximizing the quantity:
+\[\boxed{
+    J(\mathbf{w}) = ||\mathbf{y} - \mathbf{X}\mathbf{w}||_2^2 + ||\mathbf{S}^{-1} \mathbf{w}||_2^2.}
+\]
+
+
+
+
+

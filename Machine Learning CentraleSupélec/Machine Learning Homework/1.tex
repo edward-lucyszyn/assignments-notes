@@ -1,0 +1,17 @@
+\section{Exercise I: True/ False}
+
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{False.} Principal Component Analysis (PCA) is a linear dimensionality reduction method because the result $\mathbf{X_{PCA}}$ can be expressed as a linear expression depending on the data $\mathbf{X}$, a matrix product of this form:
+    \[
+        \mathbf{X_{PCA}} = \mathbf{A}\mathbf{X} + \mathbf{B}.
+    \]
+    \item \textbf{True.} Clustering is a subjective task because it can lead to different clusters depending on the algorithm used. For example, in a dataset filled with 2 circular lines of nodes, k-means and Spectral Clustering give different results. Moreover, the number of clusters $k$ is subjective.
+    \item \textbf{True.} The Kernel trick with SVM is to avoid the direct computation of $\phi(x_i)$ by computing directly the inner product $\langle \phi(x_1), \phi(x_2) \rangle = k(x_1, x_2)$. So, there is no need to have the expression of $\phi$. Also, the output of a Kernel function must be in a Hilbert space; the function does not have to be of finite dimension.
+    \item \textbf{False.} The main purpose of Fisher Discriminant Analysis (FDA) is to reduce dimensionality while enforcing class separation. One of its applications is to perform classification, but it is not its main purpose.
+    \item \textbf{False.} For example, sometimes the phenomenon of overfitting can occur. In this case, even if the number of entry parameters increases, the model will not perform well on unseen data.
+    \item \textbf{True.} Instead of computing the derivative for each parameter of the data sample, Stochastic Gradient Descent allows for calculating the gradient on a single point at each step. For an input with, for example, 1,000,000 points, the number of calculations at each step can be reduced by 1,000,000.
+    \item \textbf{True.} A 1-NN classifier has higher variance than a 3-NN classifier because the 1-NN is sensitive to mislabeled data.
+    \item \textbf{False.} If $A$ is a rectangular matrix of shape $(n, q) \in \mathbb{N}^2$ with $n \neq q$, then $A^{\intercal}A$ is of size $(q, q)$ and $AA^{\intercal}$ is of size $(n, n)$. Thus, since the eigenvectors are not of the same dimension, they cannot be the same.
+    \item \textbf{False.} In AdaBoost, the error associated with each hypothesis is computed as the weighted sum of misclassified examples, not as a simple ratio, because each example has its own weight that is updated after each step.
+    \item \textbf{True.} For example, if $X$ represents the data and $\theta$ the set of parameters, then the posterior distribution to maximize is $f(\theta | X)$. Then, with Bayes' formula, $f(\theta | X) \propto f(X | \theta)\pi(\theta)$ with $\pi(\theta)$ being the prior distribution and $f(X | \theta)$ the likelihood. Thus, it shows that it considers the parameters of the model as random variables following a specific prior distribution.
+\end{enumerate}
